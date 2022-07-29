@@ -1,31 +1,34 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:autofact/number_to_letter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-import 'package:intl/intl.dart';
-import 'dart:typed_data';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:async';
+import 'package:printing/printing.dart';
+
+import 'features/printer/presentation/pages/select_model_page.dart';
 
 class Body extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => _BodyState();
 }
 
-class _BodyState extends State<Body>{
+class _BodyState extends State<Body> {
   static var FactOrProfNumber;
   static var jour;
   static var Numero;
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -34,116 +37,104 @@ class _BodyState extends State<Body>{
     const locale = "fr";
     final dateTimeFormat = DateFormat.yMMMMd(locale);
     var DateDuJour = new DateTime.now();
-    String maChaine =  DateFormat('hh yy MM ss').format(DateDuJour);
-    jour = 'Saint-Priest le ' + dateTimeFormat.format(DateDuJour);
+    String maChaine = DateFormat('hh yy MM ss').format(DateDuJour);
+    jour = 'Yaoundé le ' + dateTimeFormat.format(DateDuJour);
 
-    Numero =  maChaine.replaceAll(new RegExp(r"\s+\b|\b\s"), "") ;
+    Numero = maChaine.replaceAll(new RegExp(r"\s+\b|\b\s"), "");
     const State1 = 'assets/Svg/StatesBars_1.svg';
 
-
-    return  SingleChildScrollView(
+    return SingleChildScrollView(
         child: Center(
-      child: Column(
-          children: <Widget>[
-          SvgPicture.asset(
+      child: Column(children: <Widget>[
+        SvgPicture.asset(
           State1,
-          ),
-
+        ),
 
         Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                  children: <Widget>[
-
-                    DateOfMounth(),
-
-                    LiteRollingSwitch(
-                      value: false,
-                      textOn: 'Proforma',
-                      textOff: 'Facture',
-                      colorOn:  Color.fromRGBO(0, 185, 255, 1),
-                      colorOff: Color(0xFF7451eb),
-                      iconOn: Icons.edit,
-                      iconOff: Icons.print,
-                      onChanged: (bool state) {
-                        FactOrProfNumber = '${(state) ? 'Proforma N°' : 'Facture N°'} $Numero';
-                      },
-                    ),
-
-
-                  ]
-              ),
+          padding: EdgeInsets.all(10),
+          child: Column(children: <Widget>[
+            DateOfMounth(),
+            LiteRollingSwitch(
+              value: false,
+              textOn: 'Proforma',
+              textOff: 'Facture',
+              colorOn: Color.fromRGBO(0, 185, 255, 1),
+              colorOff: Color(0xFF7451eb),
+              iconOn: Icons.edit,
+              iconOff: Icons.print,
+              onChanged: (bool state) {
+                FactOrProfNumber =
+                    '${(state) ? 'Proforma N°' : 'Facture N°'} $Numero';
+              },
             ),
-            FractionallySizedBox(
-              widthFactor: 0.95,
-            child: Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              padding: EdgeInsets.only(bottom: 25, left: 15,right: 15,),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                color: const Color(0x17004eff),
-              ),
-
-              child: Column(
-      children: <Widget>[
-
+          ]),
+        ),
+        FractionallySizedBox(
+          widthFactor: 0.95,
+          child: Container(
+            margin: EdgeInsets.only(top: 20, bottom: 20),
+            padding: EdgeInsets.only(
+              bottom: 25,
+              left: 15,
+              right: 15,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: const Color(0x17004eff),
+            ),
+            child: Column(children: <Widget>[
               BasicInformations(),
+            ]),
+          ),
+        ),
 
-      ]
-              ),
+        RaisedButton.icon(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+          onPressed: () {
+            Navigator.push(context, InfosCommande());
+          },
+          color: Color.fromRGBO(0, 185, 255, 1),
+          textColor: Colors.white,
+          label: Text(
+            'Information Sur Produits',
+            style: TextStyle(
+              fontFamily: 'Century Gothic',
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
             ),
-            ),
+          ),
+          icon: Icon(Icons.assignment),
+        ),
 
-            RaisedButton.icon(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-              onPressed: () {Navigator.push(context, InfosCommande());},
-              color: Color.fromRGBO(0, 185, 255, 1),
-              textColor: Colors.white,
-              label: Text('Information Sur Produits',
-                style: TextStyle(
-                  fontFamily: 'Century Gothic',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),),
-              icon: Icon(Icons.assignment),
-            ),
-
-            Container(
-                width: double.infinity,
-                height: 50.0,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(top: 100),
-                decoration: BoxDecoration(
-                  color: const Color(0x59acacac),
-                ),
-
-                  child: Text(
-                    'Powered by TinArt © & Designed By Lewis TINA\nL2 Student\'s software Engineering',
-                    style: TextStyle(
-                      fontFamily: 'Century Gothic',
-                      fontSize: 15,
-                      color: const Color(0xff000000),
-                      fontWeight: FontWeight.w700,
-                    ),
-                    textAlign: TextAlign.center,
-                ),
-              ),
-          ]
-
-      ),
-
-        )
-
-    );
+        // Container(
+        //     width: double.infinity,
+        //     height: 50.0,
+        //     padding: EdgeInsets.all(5),
+        //     margin: EdgeInsets.only(top: 100),
+        //     decoration: BoxDecoration(
+        //       color: const Color(0x59acacac),
+        //     ),
+        //
+        //       child: Text(
+        //         'Powered by TinArt © & Designed By Lewis TINA\nL2 Student\'s software Engineering',
+        //         style: TextStyle(
+        //           fontFamily: 'Century Gothic',
+        //           fontSize: 15,
+        //           color: const Color(0xff000000),
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //         textAlign: TextAlign.center,
+        //     ),
+        //   ),
+      ]),
+    ));
   }
 }
 
-
 // Creation du block des Dates
-class DateOfMounth extends StatelessWidget{
-
+class DateOfMounth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTime actuel = new DateTime.now();
@@ -156,7 +147,7 @@ class DateOfMounth extends StatelessWidget{
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
           gradient: LinearGradient(
-            colors: [Color(0xFF7451eb),Color.fromRGBO(0, 185, 255, 1)],
+            colors: [Color(0xFF7451eb), Color.fromRGBO(0, 185, 255, 1)],
           ),
           boxShadow: [
             BoxShadow(
@@ -166,9 +157,9 @@ class DateOfMounth extends StatelessWidget{
             ),
           ],
         ),
-
         child: Center(
-          child: Text(formattedDate,
+          child: Text(
+            formattedDate,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Century Gothic',
@@ -179,41 +170,41 @@ class DateOfMounth extends StatelessWidget{
             ),
           ),
         ),
-
       ),
     );
   }
 }
 
 // Information Basiques sur la facture
-class BasicInformations extends StatefulWidget{
-  BasicInformations ({Key key}) : super(key: key);
+class BasicInformations extends StatefulWidget {
+  BasicInformations({Key key}) : super(key: key);
 
   @override
   _BasicInformations createState() => _BasicInformations();
 }
 
- class _BasicInformations extends State<BasicInformations> {
+class _BasicInformations extends State<BasicInformations> {
   var doit = TextEditingController();
   var objet = TextEditingController();
   var adresse = TextEditingController();
-  var devoir ='';
-  var ob ='';
+  var devoir = '';
+  var ob = '';
   var ad = '';
   static _BasicInformations globalInstance = new _BasicInformations();
 
-   _onChanged(String value) {
-     globalInstance.devoir = value;
-  }
-   _onChanged2(String value) {
-     globalInstance.ob = value;
-  }
-   _onChanged3(String value) {
-     globalInstance.ad = value;
+  _onChanged(String value) {
+    globalInstance.devoir = value;
   }
 
+  _onChanged2(String value) {
+    globalInstance.ob = value;
+  }
 
-  static FractionallySizedBox createView(){
+  _onChanged3(String value) {
+    globalInstance.ad = value;
+  }
+
+  static FractionallySizedBox createView() {
     return FractionallySizedBox(
       widthFactor: 0.95,
       child: Column(
@@ -232,34 +223,35 @@ class BasicInformations extends StatefulWidget{
                 ),
               ],
             ),
-
             child: Column(
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.all(13),
                   height: 46.0,
-                  padding:EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     color: const Color(0xffeaeaea),
                   ),
-
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.assignment_ind, color: Color.fromRGBO(0, 185, 255, 1),),
+                      Icon(
+                        Icons.assignment_ind,
+                        color: Color.fromRGBO(0, 185, 255, 1),
+                      ),
                       SizedBox(width: 10),
-                      Text( globalInstance.devoir,//Body.objet.text,
+                      Text(
+                        globalInstance.devoir, //Body.objet.text,
                         style: TextStyle(
                           fontFamily: 'Century Gothic',
                           color: Color(0x60004eff),
                           fontWeight: FontWeight.w700,
-                        ),),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-
-
               ],
             ),
           ),
@@ -269,10 +261,10 @@ class BasicInformations extends StatefulWidget{
   }
 
   @override
-  void dispose(){
-    globalInstance.devoir = '' ;
-    globalInstance.ob = '' ;
-    globalInstance.ad = '' ;
+  void dispose() {
+    globalInstance.devoir = '';
+    globalInstance.ob = '';
+    globalInstance.ad = '';
     super.dispose();
   }
 
@@ -282,69 +274,62 @@ class BasicInformations extends StatefulWidget{
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(10),
-          child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: doit,
-                  onChanged: (String value) {
-                    _onChanged(value);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Doit',
-                    prefixIcon: Icon(Icons.assignment_ind),
-                  ),
-                ),
-
-                  TextFormField(
-                  controller: adresse,
-                  onChanged: (String value) {
-                    _onChanged3(value);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Adresse',
-                    prefixIcon: Icon(Icons.location_city_rounded),
-                  ),
-                ),
-
-                TextFormField(
-                  controller: objet,
-                  onChanged: (String value) {
-                    _onChanged2(value);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Objet',
-                    
-                    prefixIcon: Icon(Icons.style),
-                  ),
-                ),
-              ]
-          ),
+          child: Column(children: <Widget>[
+            TextFormField(
+              controller: doit,
+              onChanged: (String value) {
+                _onChanged(value);
+              },
+              decoration: InputDecoration(
+                labelText: 'Doit',
+                prefixIcon: Icon(Icons.assignment_ind),
+              ),
+            ),
+            TextFormField(
+              controller: adresse,
+              onChanged: (String value) {
+                _onChanged3(value);
+              },
+              decoration: InputDecoration(
+                labelText: 'Adresse',
+                prefixIcon: Icon(Icons.location_city_rounded),
+              ),
+            ),
+            TextFormField(
+              controller: objet,
+              onChanged: (String value) {
+                _onChanged2(value);
+              },
+              decoration: InputDecoration(
+                labelText: 'Objet',
+                prefixIcon: Icon(Icons.style),
+              ),
+            ),
+          ]),
         ),
       ],
     );
   }
-
 }
-
 
 // Page N°2 Pour l'insertion des Données
 class InfosCommande extends MaterialPageRoute<void> {
   InfosCommande()
       : super(builder: (BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color.fromRGBO(232, 239, 255, 1) ,
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Informations Sur La Comande' ,
-              style: TextStyle(fontFamily: 'Century Gothic',fontWeight: FontWeight.w400,)),
-          elevation: 0.0,
-          backgroundColor: Color(0xFF7451eb),
-        ),
-
-        body: EditionTableau()
-
-    );
-  });
+          return Scaffold(
+              backgroundColor: Color.fromRGBO(232, 239, 255, 1),
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text('Informations Sur La Comande',
+                    style: TextStyle(
+                      fontFamily: 'Century Gothic',
+                      fontWeight: FontWeight.w400,
+                    )),
+                elevation: 0.0,
+                backgroundColor: Color(0xFF7451eb),
+              ),
+              body: EditionTableau());
+        });
 }
 
 // Container Adaptatif du Table Dynamique
@@ -364,14 +349,13 @@ class _EditionTableauState extends State<EditionTableau> {
   var Produit = '';
   var Produit2 = '';
   var Montant = '';
-  List<ElementEntry> entries ;
-  List<Product> donnees ;
+  List<ElementEntry> entries;
+  List<Product> donnees;
   static _EditionTableauState globalInstance2 = new _EditionTableauState();
 
   _Changed(String value) {
-    globalInstance2.Montant= value;
+    globalInstance2.Montant = value;
   }
-
 
   _Changed2(String value) {
     Produit2 = value;
@@ -392,128 +376,110 @@ class _EditionTableauState extends State<EditionTableau> {
     PrixT.add(PrixTController);
 
     //Création de la ligne mère
-    return Column(
-        children:
-        <Widget>[
-
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-
-                  height: 35,
-                  child:TextField(
-                    controller: QteController,
-                    keyboardType: TextInputType.number,
-                    maxLines: 1,
-
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(bottom: 35 / 2,)
-                    ),
-
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,),
-
-                  ) ,
+    return Column(children: <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              height: 35,
+              child: TextField(
+                controller: QteController,
+                keyboardType: TextInputType.number,
+                maxLines: 1,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                      bottom: 35 / 2,
+                    )),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
                 ),
               ),
-
-
-              Expanded(
-                flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0x170dc8ff),
-                  ),
-                  height: 35,
-                  child:TextField(
-                    controller: DesignationController,
-                    maxLines: 1,
-
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(bottom: 35 / 2,)
-                    ),
-
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,),
-
-                  ) ,
-                ),
-              ),
-
-
-              Expanded(
-                flex: 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  height: 35,
-                  child:TextField(
-                    controller: PrixUController,
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(bottom: 35 / 2,)
-                    ),
-
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,),
-
-                  ) ,
-                ),
-              ),
-
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0x170dc8ff),
-                  ),
-                  height: 35,
-                  child:TextField(
-                    controller: reductionController,
-                    maxLines: 1,
-                    onChanged: (String value) {
-                      _Changed2(value);
-                    },
-                    keyboardType: TextInputType.number,
-
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(bottom: 35 / 2,)
-                    ),
-
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,),
-
-                  ) ,
-                ),
-              ),
-
-
-            ],
+            ),
           ),
-
-        ]
-
-    );
+          Expanded(
+            flex: 3,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0x170dc8ff),
+              ),
+              height: 35,
+              child: TextField(
+                controller: DesignationController,
+                maxLines: 1,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                      bottom: 35 / 2,
+                    )),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              height: 35,
+              child: TextField(
+                controller: PrixUController,
+                maxLines: 1,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                      bottom: 35 / 2,
+                    )),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0x170dc8ff),
+              ),
+              height: 35,
+              child: TextField(
+                controller: reductionController,
+                maxLines: 1,
+                onChanged: (String value) {
+                  _Changed2(value);
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                      bottom: 35 / 2,
+                    )),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ]);
   }
 
   @override
-  void dispose(){
-    globalInstance2.Montant= '' ;
+  void dispose() {
+    globalInstance2.Montant = '';
     super.dispose();
   }
 
@@ -527,149 +493,163 @@ class _EditionTableauState extends State<EditionTableau> {
     globalInstance2.donnees = [];
 
     for (int i = 0; i < ligne.length; i++) {
-
-      var Num = (i+1).toString();
+      var Num = (i + 1).toString();
       var designation = Designation[i].text;
-      if(Designation[i].text.isEmpty){designation = 'Non Mentionner';};
+      if (Designation[i].text.isEmpty) {
+        designation = 'Non Mentionner';
+      }
+      ;
 
       var reduction = 0.00;
 
       var quantity = double.tryParse(Qte[i].text);
-      if(Qte[i].text.isEmpty){quantity=0;};
+      if (Qte[i].text.isEmpty) {
+        quantity = 0;
+      }
+      ;
 
       var price = double.tryParse(PrixU[i].text);
-      if(PrixU[i].text.isEmpty){price = 0;};
+      if (PrixU[i].text.isEmpty) {
+        price = 0;
+      }
+      ;
 
-      globalInstance2.donnees.add(Product(Num, designation, reduction,quantity, price));
+      globalInstance2.donnees
+          .add(Product(Num, designation, reduction, quantity, price));
     }
 
-    if(ligne.length >=1 ) {
+    if (ligne.length >= 1) {
       var last = globalInstance2.donnees[ligne.length - 1].quantity;
       if (last == 0) {
-        print ('Champ Nom Saisi');
-        Scaffold.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor:  Color(0xffeaeaea),
-              elevation: 0,
-              duration: Duration(milliseconds: 800),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
-
-              content: Text('Veuillez Remplir La Ligne Précédente',
-                style: TextStyle(
-                  fontFamily: 'Century Gothic',
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                ),),
-            )
-        );
-        return ;
-
+        print('Champ Nom Saisi');
+        Scaffold.of(context).showSnackBar(SnackBar(
+          backgroundColor: Color(0xffeaeaea),
+          elevation: 0,
+          duration: Duration(milliseconds: 800),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          content: Text(
+            'Veuillez Remplir La Ligne Précédente',
+            style: TextStyle(
+              fontFamily: 'Century Gothic',
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ));
+        return;
       }
-
     }
 
     setState(() {});
     ligne.add(createColumn());
-
   }
 
-  _Done(){
+  _Done() {
     globalInstance2.donnees = [];
-    if(Qte[0].text.isEmpty){
-      Scaffold.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor:  Color(0xffeaeaea),
-            elevation: 0,
-            duration: Duration(milliseconds: 800),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
-
-            content: Text('Cette Facture ne contient aucune quantité de produit',
-              style: TextStyle(
-                fontFamily: 'Century Gothic',
-                color: Colors.black,
-                fontWeight: FontWeight.w700,
-              ),),
-          ));
+    if (Qte[0].text.isEmpty) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        backgroundColor: Color(0xffeaeaea),
+        elevation: 0,
+        duration: Duration(milliseconds: 800),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        content: Text(
+          'Cette Facture ne contient aucune quantité de produit',
+          style: TextStyle(
+            fontFamily: 'Century Gothic',
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ));
       return;
-    };
+    }
+    ;
 
     for (int i = 0; i < ligne.length; i++) {
-
-      var Num = (i+1).toString();
+      var Num = (i + 1).toString();
       var designation = Designation[i].text;
-      if(Designation[i].text.isEmpty){designation = 'Non Mentionner';};
+      if (Designation[i].text.isEmpty) {
+        designation = 'Non Mentionner';
+      }
+      ;
 
       var reduction = double.tryParse(Reduction[i].text);
-      if(Reduction[i].text.isEmpty){reduction = 0;};
+      if (Reduction[i].text.isEmpty) {
+        reduction = 0;
+      }
+      ;
 
       var quantity = double.tryParse(Qte[i].text);
 
       var price = double.tryParse(PrixU[i].text);
-      if(PrixU[i].text.isEmpty){price = 0;};
+      if (PrixU[i].text.isEmpty) {
+        price = 0;
+      }
+      ;
 
-      if(Qte[i].text.isNotEmpty){
-      globalInstance2.donnees.add(Product(Num, designation,reduction,quantity, price));}
+      if (Qte[i].text.isNotEmpty) {
+        globalInstance2.donnees
+            .add(Product(Num, designation, reduction, quantity, price));
+      }
     }
 
     //if(double.tryParse(globalInstance2.Montant) > Invoice._grandTotal){}
-
-
-    Navigator.push(context, Printer());
   }
-
 
   @override
   Widget build(BuildContext context) {
     const State2 = 'assets/Svg/StatesBars_2.svg';
-    //print( _Done.entries );
-
 
     return Scaffold(
       backgroundColor: Color(0xffF8F8F8),
       body: Center(
         child: FractionallySizedBox(
-        widthFactor: 0.95,
-
-        child: Column(
-        children: <Widget>[
-          SvgPicture.asset( State2,),
-
-          _BasicInformations.createView(),
-
-          TableHead(),
-          Expanded(
-            child: ListView.builder(
-              itemCount: ligne.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ligne[index];
-              },
-            ),
-          ),
-
-          Container(
-            child: TextFormField(
-              onChanged: (String value) {
-                _Changed(value);
-              },
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Montant Payé',
-
-                prefixIcon: Icon(Icons.style),
+          widthFactor: 0.95,
+          child: Column(
+            children: <Widget>[
+              SvgPicture.asset(
+                State2,
               ),
-            ),
-            )
-
-        ],
+              _BasicInformations.createView(),
+              TableHead(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: ligne.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ligne[index];
+                  },
+                ),
+              ),
+              Container(
+                child: TextFormField(
+                  onChanged: (String value) {
+                    _Changed(value);
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Montant Payé',
+                    prefixIcon: Icon(Icons.style),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
-    ),
-      ),
-
       bottomNavigationBar: BottomAppBar(
         color: Color(0xFF7451eb),
         shape: CircularNotchedRectangle(),
         child: Container(
-          padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 80, ),
+          padding: EdgeInsets.only(
+            left: 10,
+            top: 10,
+            bottom: 10,
+            right: 80,
+          ),
           height: 50,
           child: RaisedButton(
             shape: RoundedRectangleBorder(
@@ -680,26 +660,29 @@ class _EditionTableauState extends State<EditionTableau> {
             hoverElevation: 0,
             focusElevation: 0,
             highlightElevation: 0,
-            textColor:  Color(0xFF7451eb),
+            textColor: Color(0xFF7451eb),
             child: Text("Construire",
                 style: TextStyle(
                   fontFamily: 'Century Gothic',
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 )),
-            onPressed: () {_Done();},
+            onPressed: () {
+              _Done();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectModelPage()));
+            },
           ),
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: _onDone,
         backgroundColor: Color.fromRGBO(0, 185, 255, 1),
         child: Icon(Icons.add_box),
-      ) ,
-
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-
     );
   }
 }
@@ -708,16 +691,17 @@ class ElementEntry {
   final String qte;
   final String designation;
   final String prixu;
-  var  prixt;
+  var prixt;
 
   ElementEntry(this.qte, this.designation, this.prixu, this.prixt);
   @override
   String toString() {
-        return 'LigneCommande: Quantité= $qte, Désignation= $designation, Prix U= $prixu, Prix T= $prixt';
+    return 'LigneCommande: Quantité= $qte, Désignation= $designation, Prix U= $prixu, Prix T= $prixt';
   }
 }
+
 // Creation des En-tete du Tableau Dynamique
-class TableHead extends StatelessWidget{
+class TableHead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -728,12 +712,12 @@ class TableHead extends StatelessWidget{
                 flex: 1,
                 child: Container(
                   height: 35,
-                  padding: EdgeInsets.only(top:10),
+                  padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft:  Radius.circular(12)),
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(12)),
                     color: Color.fromRGBO(0, 185, 255, 1),
                   ),
-
                   child: Text(
                     "Qté",
                     textAlign: TextAlign.center,
@@ -743,19 +727,18 @@ class TableHead extends StatelessWidget{
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                )
-            ),
-
+                )),
             Expanded(
                 flex: 3,
                 child: Container(
                   height: 35,
-                  padding: EdgeInsets.only(top:10),
+                  padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
-                    border: Border(right: BorderSide(color: Colors.white),left: BorderSide(color: Colors.white)),
+                    border: Border(
+                        right: BorderSide(color: Colors.white),
+                        left: BorderSide(color: Colors.white)),
                     color: Color.fromRGBO(0, 185, 255, 1),
                   ),
-
                   child: Text(
                     "Désignation",
                     textAlign: TextAlign.center,
@@ -765,20 +748,18 @@ class TableHead extends StatelessWidget{
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                )
-            ),
-
-
+                )),
             Expanded(
                 flex: 2,
                 child: Container(
                   height: 35,
-                  padding: EdgeInsets.only(top:10),
+                  padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
-                    border: Border(right: BorderSide(color: Colors.white),left: BorderSide(color: Colors.white)),
+                    border: Border(
+                        right: BorderSide(color: Colors.white),
+                        left: BorderSide(color: Colors.white)),
                     color: Color.fromRGBO(0, 185, 255, 1),
                   ),
-
                   child: Text(
                     "Prix U.",
                     textAlign: TextAlign.center,
@@ -788,19 +769,17 @@ class TableHead extends StatelessWidget{
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                )
-            ),
-
+                )),
             Expanded(
                 flex: 1,
                 child: Container(
                   height: 35,
-                  padding: EdgeInsets.only(top:10),
+                  padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topRight:  Radius.circular(12)),
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(12)),
                     color: Color.fromRGBO(0, 185, 255, 1),
                   ),
-
                   child: Text(
                     "Réduc",
                     textAlign: TextAlign.center,
@@ -810,45 +789,41 @@ class TableHead extends StatelessWidget{
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                )
-            ),
-
-
+                )),
           ],
         ),
-
       ],
     );
   }
 }
 
 class Printer extends MaterialPageRoute<void> {
-  Printer()
+  Printer({@required int formatModel})
       : super(builder: (BuildContext context) {
-
-    return Scaffold(
-
-
-      body: Scaffold(
-        backgroundColor: const Color(0xffffffff),
-        appBar: AppBar(
-          centerTitle: true,
-          title:
-          Text('Validation',
-              style: TextStyle(fontFamily: 'Century Gothic',fontWeight: FontWeight.w400,)
-          ),
-          backgroundColor: Color(0xFF7451eb),
-          elevation: 0.0,
-        ),
-
-        body: PdfPreview(build: (format) => generateInvoice(PdfPageFormat.a4),
-    ),
-    ),);
-  });
+          return Scaffold(
+            body: Scaffold(
+              backgroundColor: const Color(0xffffffff),
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text('Validation',
+                    style: TextStyle(
+                      fontFamily: 'Century Gothic',
+                      fontWeight: FontWeight.w400,
+                    )),
+                backgroundColor: Color(0xFF7451eb),
+                elevation: 0.0,
+              ),
+              body: PdfPreview(
+                build: (format) =>
+                    generateInvoice(PdfPageFormat.a4, formatModel),
+              ),
+            ),
+          );
+        });
 }
 
-Future<Uint8List> generateInvoice(PdfPageFormat pageFormat) async {
-
+Future<Uint8List> generateInvoice(
+    PdfPageFormat pageFormat, int formatModel) async {
   final invoice = Invoice(
     invoiceNumber: _BodyState.Numero,
     products: _EditionTableauState.globalInstance2.donnees,
@@ -859,7 +834,7 @@ Future<Uint8List> generateInvoice(PdfPageFormat pageFormat) async {
     accentColor: PdfColors.blueGrey900,
   );
 
-  return await invoice.buildPdf(pageFormat);
+  return await invoice.buildPdf(pageFormat, formatModel);
 }
 
 class Invoice {
@@ -899,14 +874,15 @@ class Invoice {
 
   var montant = double.tryParse(_EditionTableauState.globalInstance2.Montant);
 
-  var  _aPaye;
+  var _aPaye;
 
   //String _logo;
 
   String _bgShape;
   String _chShape;
+  String headerImg, footerImg;
 
-  Future<Uint8List> buildPdf(PdfPageFormat pageFormat) async {
+  Future<Uint8List> buildPdf(PdfPageFormat pageFormat, int formatModel) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -914,7 +890,29 @@ class Invoice {
     final font2 = await rootBundle.load('assets/fonts/roboto2.ttf');
     final font3 = await rootBundle.load('assets/fonts/roboto3.ttf');
 
-    _bgShape = await rootBundle.loadString('assets/Svg/FondPKA.svg');
+    switch (formatModel) {
+      case 1:
+        {
+          //bg des factures
+          _bgShape = await rootBundle.loadString('assets/Svg/FondPKA.svg');
+        }
+        break;
+      case 2:
+        {
+          //bg des devis
+          _bgShape = await rootBundle.loadString('assets/Svg/FondE_GEG.svg');
+          headerImg = await rootBundle.loadString('assets/Svg/Head_GEG.svg');
+          footerImg = await rootBundle.loadString('assets/Svg/FootE_GEG.svg');
+        }
+        break;
+      case 3:
+        {
+          //bg des attestations
+          _bgShape = await rootBundle.loadString('assets/Svg/Fond_GEG.svg');
+        }
+        break;
+    }
+
     _chShape = await rootBundle.loadString('assets/Svg/ContHd.svg');
 
     // Add page to the PDF
@@ -926,16 +924,35 @@ class Invoice {
             pw.Font.ttf(font2),
             pw.Font.ttf(font3),
           ),
-          header: _buildHeader,
-          footer: _buildFooter,
+          header: formatModel == 1
+              ? _buildHeader
+              : formatModel == 2
+                  ? _buildDevisHeader
+                  : _buildHeader,
+          footer: formatModel == 1
+              ? _buildFooter
+              : formatModel == 2
+                  ? _buildDevisFooter
+                  : _buildFooter,
           build: (context) => [
-            _contentHeader(context),
-            _contentTable(context),
-            pw.SizedBox(height: 20),
-            _contentFooter(context),
-            pw.SizedBox(height: 20),
-          ]
-      ),
+                formatModel == 1
+                    ? _contentHeader(context)
+                    : formatModel == 2
+                        ? _contentDevisHeader(context)
+                        : _contentHeader(context),
+                formatModel == 1
+                    ? _contentTable(context)
+                    : formatModel == 2
+                        ? _contentDevisTable(context)
+                        : _contentTable(context),
+                pw.SizedBox(height: 20),
+                formatModel == 1
+                    ? _contentFooter(context)
+                    : formatModel == 2
+                        ? _contentDevisFooter(context)
+                        : _contentFooter(context),
+                pw.SizedBox(height: 20),
+              ]),
     );
 
     // Return the PDF file content
@@ -945,35 +962,40 @@ class Invoice {
     return doc.save();
   }
 
-  pw.Widget _buildHeader(pw.Context context) {
+  pw.Widget _buildDevisHeader(pw.Context context) {
     return pw.Stack(
-        children: <pw.Widget>[
-          pw.Column(
-            children: [
-              pw.Row(
-                  children: [
-                    pw.Container(
-                      height: 129,
-                    )
-                  ]
-              ),
-              pw.SizedBox(height: 40)
-            ],
-          ),
-          pw.Positioned(
-            top: 130,
-            left: 390.31,
-            child:pw.Text(
-              Num,
-              style: pw.TextStyle(
-                fontSize: 13.5,
-                fontWeight: pw.FontWeight.bold,
-                color: PdfColor.fromInt(0xFF00A6F0),
-              ),
-            ),
-          ),
+        children: <pw.Widget>[pw.SvgImage(svg: headerImg), pw.Container()]);
+  }
 
-        ]);
+  pw.Widget _buildHeader(pw.Context context) {
+    return pw.Stack(children: <pw.Widget>[
+      pw.Column(
+        children: [
+          pw.Row(children: [
+            pw.Container(
+              height: 129,
+            )
+          ]),
+          pw.SizedBox(height: 40)
+        ],
+      ),
+      pw.Positioned(
+        top: 130,
+        left: 390.31,
+        child: pw.Text(
+          Num,
+          style: pw.TextStyle(
+            fontSize: 13.5,
+            fontWeight: pw.FontWeight.bold,
+            color: PdfColor.fromInt(0xFF00A6F0),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  pw.Widget _buildDevisFooter(pw.Context context) {
+    return pw.SvgImage(svg: footerImg);
   }
 
   pw.Widget _buildFooter(pw.Context context) {
@@ -1001,10 +1023,10 @@ class Invoice {
   }
 
   pw.PageTheme _buildTheme(
-      PdfPageFormat pageFormat,pw.Font base, pw.Font bold, pw.Font italic) {
+      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
     return pw.PageTheme(
       pageFormat: pageFormat,
-      margin: pw.EdgeInsets.only(left:20,right: 20, bottom: 55) ,
+      margin: pw.EdgeInsets.only(left: 20, right: 20, bottom: 55),
       theme: pw.ThemeData.withFont(
         base: base,
         bold: bold,
@@ -1033,217 +1055,319 @@ class Invoice {
               children: [
                 pw.TextSpan(
                   text: 'Nom:   ',
-                  style:  pw.TextStyle(
+                  style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
                     //font: Gothic,
                   ),
                 ),
                 pw.TextSpan(
-                  text: _BasicInformations.globalInstance.devoir +'\n',
-                  style:  pw.TextStyle(
-                    //fontFamily: 'Century Gothic',
-                  ),
+                  text: _BasicInformations.globalInstance.devoir + '\n',
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
                 ),
                 pw.TextSpan(
                   text: 'Adresse:   ',
-                  style:  pw.TextStyle(
+                  style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
                   ),
                 ),
                 pw.TextSpan(
                   text: _BasicInformations.globalInstance.ad,
-                  style:  pw.TextStyle(
-                    //fontFamily: 'Century Gothic',
-                  ),
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
                 ),
               ],
             ),
-            textAlign:  pw.TextAlign.left,
+            textAlign: pw.TextAlign.left,
           ),
         ),
-
         pw.Container(
           margin: pw.EdgeInsets.only(top: 145, left: 30),
           width: 500,
           child: pw.RichText(
             text: pw.TextSpan(
               text: _BasicInformations.globalInstance.ob,
-              style:  pw.TextStyle(
+              style: pw.TextStyle(
                 fontStyle: pw.FontStyle.italic,
               ),
             ),
-            textAlign:  pw.TextAlign.left,
+            textAlign: pw.TextAlign.left,
           ),
         ),
-
         pw.Container(
           margin: pw.EdgeInsets.only(left: 390, right: 20),
-            child: pw.RichText(
-              text: pw.TextSpan(
-                text: _BodyState.jour,
-                style: pw.TextStyle(
-                    fontSize: 11,
-                  decoration: pw.TextDecoration.underline,
-                ),
+          child: pw.RichText(
+            text: pw.TextSpan(
+              text: _BodyState.jour,
+              style: pw.TextStyle(
+                fontSize: 11,
+                decoration: pw.TextDecoration.underline,
               ),
-              textAlign:  pw.TextAlign.left,
             ),
+            textAlign: pw.TextAlign.left,
+          ),
         )
+      ],
+    );
+  }
 
+  pw.Widget _contentDevisHeader(pw.Context context) {
+    return pw.Column(
+      children: <pw.Widget>[
+        pw.Container(
+          margin: pw.EdgeInsets.only(left: 390, right: 20),
+          child: pw.RichText(
+            text: pw.TextSpan(
+              text: _BodyState.jour,
+              style: pw.TextStyle(
+                fontSize: 11,
+                decoration: pw.TextDecoration.underline,
+                fontStyle: pw.FontStyle.italic,
+              ),
+            ),
+            textAlign: pw.TextAlign.left,
+          ),
+        ),
+        pw.Container(
+          margin: pw.EdgeInsets.only(top: 35),
+          width: 500,
+          child: pw.RichText(
+            text: pw.TextSpan(
+              style: pw.TextStyle(
+                fontSize: 12,
+                color: PdfColors.black,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: 'Doit:   ',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline,
+                    //font: Gothic,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: _BasicInformations.globalInstance.devoir.toUpperCase() +
+                      '\n',
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
+                ),
+                pw.TextSpan(
+                  text: 'Objet:   ',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: _BasicInformations.globalInstance.ob.toUpperCase(),
+                  style: pw.TextStyle(
+                    fontStyle: pw.FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+            textAlign: pw.TextAlign.left,
+          ),
+        ),
       ],
     );
   }
 
   pw.Widget _contentFooter(pw.Context context) {
-    if(montant == null){ montant = 0;}
-
-    if( montant > _grandTotal){
-     _aPaye = 'Le Montant Que vous encaissez est superieur au montant à payer veuillez vérifier';
+    if (montant == null) {
+      montant = 0;
     }
 
-    else{
+    if (montant > _grandTotal) {
+      _aPaye =
+          'Le Montant Que vous encaissez est superieur au montant à payer veuillez vérifier';
+    } else {
       _aPaye = _grandTotal - montant;
     }
-    return pw.Column(
-      children: [
-    pw.Row(
-    crossAxisAlignment: pw.CrossAxisAlignment.start,
-      children: [
-        pw.Expanded(
-          flex: 2,
-        ),
-        pw.Expanded(
-          flex: 1,
-          child: pw.DefaultTextStyle(
-            style: const pw.TextStyle(
-              fontSize: 10,
-              color: _darkColor,
-            ),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text('Sous Total:'),
-                    pw.Text(_formatCurrency(_total)),
-                  ],
-                ),
-                pw.SizedBox(height: 5),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text('Réduction:'),
-                    pw.Text('$_reduc'),
-                  ],
-                ),
-                pw.Divider(color: accentColor),
-                pw.DefaultTextStyle(
-                  style: pw.TextStyle(
-                    color: PdfColor.fromInt(0xFF00A6F0),
-                    fontSize: 14,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                  child: pw.Row(
+    return pw.Column(children: [
+      pw.Row(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Expanded(
+            flex: 2,
+          ),
+          pw.Expanded(
+            flex: 1,
+            child: pw.DefaultTextStyle(
+              style: const pw.TextStyle(
+                fontSize: 10,
+                color: _darkColor,
+              ),
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.Text('Total:'),
-                      pw.Text(_formatCurrency(_grandTotal)),
+                      pw.Text('Sous Total:'),
+                      pw.Text(_formatCurrency(_total)),
                     ],
                   ),
+                  pw.SizedBox(height: 5),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('Réduction:'),
+                      pw.Text('$_reduc'),
+                    ],
+                  ),
+                  pw.Divider(color: accentColor),
+                  pw.DefaultTextStyle(
+                    style: pw.TextStyle(
+                      color: PdfColor.fromInt(0xFF00A6F0),
+                      fontSize: 14,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                    child: pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text('Total:'),
+                        pw.Text(_formatCurrency(_grandTotal)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      pw.SizedBox(height: 30),
+      pw.Row(children: [
+        pw.Expanded(
+            child: pw.Container(
+          height: 50,
+          padding: pw.EdgeInsets.all(2.5),
+          child: pw.RichText(
+            text: pw.TextSpan(
+              style: pw.TextStyle(
+                fontSize: 12,
+                color: PdfColors.black,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: 'À Payer:   ',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    //font: Gothic,
+                  ),
+                ),
+                if (montant > _grandTotal)
+                  pw.TextSpan(
+                    text: _aPaye.toString() + '\n',
+                    style: pw.TextStyle(
+                      color: PdfColors.red,
+                    ),
+                  ),
+                if (montant <= _grandTotal)
+                  pw.TextSpan(
+                    text: _aPaye.toString() + '\n',
+                    style: pw.TextStyle(
+                      color: PdfColors.black,
+                    ),
+                  ),
+                pw.TextSpan(
+                  text: 'Montant payé:   ',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: montant.toString() + '\n',
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
+                ),
+                pw.TextSpan(
+                  text: 'informations spécifiques:   ',
+                  style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: 'TVA Non Applicable Article 293 CGI ',
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
                 ),
               ],
             ),
+            textAlign: pw.TextAlign.left,
           ),
-        ),
-      ],
-    ),
-        pw.SizedBox(height: 30),
-        pw.Row(
-          children: [
-            pw.Expanded(
-                child: pw.Container(
-                  height: 50,
-                  padding: pw.EdgeInsets.all(2.5),
-                  child: pw.RichText(
-                    text: pw.TextSpan(
-                      style: pw.TextStyle(
-                        fontSize: 12,
-                        color: PdfColors.black,
+          decoration: pw.BoxDecoration(
+              border: pw.Border(
+            bottom: pw.BorderSide(
+              color: accentColor,
+              width: .5,
+            ),
+            top: pw.BorderSide(
+              color: accentColor,
+              width: .5,
+            ),
+          )),
+        )),
+      ])
+    ]);
+  }
+
+  pw.Widget _contentDevisFooter(pw.Context context) {
+    if (montant == null) {
+      montant = 0;
+    }
+
+    if (montant > _grandTotal) {
+      _aPaye =
+          'Le Montant Que vous encaissez est superieur au montant à payer veuillez vérifier';
+    } else {
+      _aPaye = _grandTotal - montant;
+    }
+    return pw.Column(children: [
+      pw.Container(
+          height: 27,
+          alignment: pw.Alignment.center,
+          decoration: pw.BoxDecoration(
+              color: PdfColor.fromInt(0xFF00A6F0),
+              borderRadius: const pw.BorderRadius.only(
+                  bottomLeft: pw.Radius.circular(15),
+                  bottomRight: pw.Radius.circular(15))),
+          child: pw.Text(_grandTotal.toString(),
+              style: pw.TextStyle(color: PdfColor.fromInt(0xFFFFFFFF)))),
+      pw.SizedBox(height: 30),
+      pw.Container(
+          alignment: pw.Alignment.centerLeft,
+          child: pw.RichText(
+            text: pw.TextSpan(
+              style: pw.TextStyle(
+                fontSize: 12,
+                color: PdfColors.black,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: 'Soit la somme de : ',
+                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic
+                      //font: Gothic,
                       ),
-                      children: [
-                        pw.TextSpan(
-                          text: 'À Payer:   ',
-                          style:  pw.TextStyle(
-                            fontWeight: pw.FontWeight.bold,
-                            //font: Gothic,
-                          ),
-                        ),
-                        if( montant > _grandTotal)
-                        pw.TextSpan(
-                          text: _aPaye.toString() + '\n',
-                          style:  pw.TextStyle(
-                            color: PdfColors.red,
-                          ),
-                        ),
-
-                        if( montant <= _grandTotal)
-                          pw.TextSpan(
-                            text: _aPaye.toString() + '\n',
-                            style:  pw.TextStyle(
-                              color: PdfColors.black,
-                            ),
-                          ),
-
-                        pw.TextSpan(
-                          text: 'Montant payé:   ',
-                          style:  pw.TextStyle(
-                            fontWeight: pw.FontWeight.bold,
-                          ),
-                        ),
-                        pw.TextSpan(
-                          text: montant.toString() +'\n',
-                          style:  pw.TextStyle(
-                            //fontFamily: 'Century Gothic',
-                          ),
-                        ),
-                      pw.TextSpan(
-                          text: 'informations spécifiques:   ',
-                          style:  pw.TextStyle(
-                            fontWeight: pw.FontWeight.bold,
-                          ),
-                        ),
-                        pw.TextSpan(
-                          text: 'TVA Non Applicable Article 293 CGI ',
-                          style:  pw.TextStyle(
-                            //fontFamily: 'Century Gothic',
-                          ),
-                        ),
-                      ],
-                    ),
-                    textAlign:  pw.TextAlign.left,
-                  ),
-                decoration: pw.BoxDecoration(
-                border: pw.Border(
-                  bottom: pw.BorderSide(
-                    color: accentColor,
-                    width: .5,
-                  ),
-                  top: pw.BorderSide(
-                    color: accentColor,
-                    width: .5,
-                  ),
-                )
+                ),
+                pw.TextSpan(
+                  text: fnumberToLetter(_grandTotal.round()) + '\n',
+                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic),
+                ),
+              ],
             ),
-
-                )
-            ),
-          ]
-        )
-      ]
-    );
+            textAlign: pw.TextAlign.left,
+          ))
+    ]);
   }
 
   pw.Widget _contentTable(pw.Context context) {
@@ -1292,16 +1416,78 @@ class Invoice {
       ),
       headers: List<String>.generate(
         tableHeaders.length,
-            (col) => tableHeaders[col],
+        (col) => tableHeaders[col],
       ),
       data: List<List<String>>.generate(
         products.length,
-            (row) => List<String>.generate(
+        (row) => List<String>.generate(
           tableHeaders.length,
-              (col) => products[row].getIndex(col),
+          (col) => products[row].getIndex(col),
         ),
       ),
     );
+  }
+
+  pw.Widget _contentDevisTable(pw.Context context) {
+    const tableHeaders = [
+      'N°',
+      'Désignation',
+      'Réduction',
+      'Qté',
+      'Prix U.',
+      'Prix T.'
+    ];
+
+    return pw.Padding(
+        padding: pw.EdgeInsets.only(top: 20),
+        child: pw.Table.fromTextArray(
+          border: null,
+          cellAlignment: pw.Alignment.centerLeft,
+          headerDecoration: pw.BoxDecoration(
+            borderRadius: const pw.BorderRadius.only(
+                topLeft: pw.Radius.circular(15),
+                topRight: pw.Radius.circular(15)),
+            color: PdfColor.fromInt(0xFF00A6F0),
+          ),
+          headerHeight: 25,
+          cellHeight: 40,
+          cellAlignments: {
+            0: pw.Alignment.center,
+            1: pw.Alignment.centerLeft,
+            2: pw.Alignment.center,
+            3: pw.Alignment.center,
+            4: pw.Alignment.centerRight,
+            5: pw.Alignment.centerRight,
+          },
+          headerStyle: pw.TextStyle(
+            color: _baseTextColor,
+            fontSize: 10,
+            fontWeight: pw.FontWeight.bold,
+          ),
+          cellStyle: const pw.TextStyle(
+            color: _darkColor,
+            fontSize: 10,
+          ),
+          rowDecoration: pw.BoxDecoration(
+            border: pw.Border(
+              bottom: pw.BorderSide(
+                color: accentColor,
+                width: .5,
+              ),
+            ),
+          ),
+          headers: List<String>.generate(
+            tableHeaders.length,
+            (col) => tableHeaders[col],
+          ),
+          data: List<List<String>>.generate(
+            products.length,
+            (row) => List<String>.generate(
+              tableHeaders.length,
+              (col) => products[row].getIndex(col),
+            ),
+          ),
+        ));
   }
 }
 
@@ -1311,12 +1497,12 @@ String _formatCurrency(double amount) {
 
 class Product {
   const Product(
-      this.Num,
-      this.designation,
-      this.reduction,
-      this.quantity,
-      this.price,
-      );
+    this.Num,
+    this.designation,
+    this.reduction,
+    this.quantity,
+    this.price,
+  );
 
   final String Num;
   final String designation;

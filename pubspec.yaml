@@ -78,6 +78,11 @@ flutter:
     - assets/Svg/StatesBars_1.svg
     - assets/Svg/StatesBars_2.svg
     - assets/Svg/StatesBars_3.svg
+    - assets/Svg/Head_GEG.svg
+    - assets/Svg/FootE_GEG.svg
+    - assets/Svg/Foot_GEG.svg
+    - assets/Svg/FondE_GEG.svg
+    - assets/Svg/Fond_GEG.svg
     - assets/Audio/telegraph.mp3
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
