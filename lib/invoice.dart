@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -8,7 +9,7 @@ Future<Uint8List> generateInvoice(PdfPageFormat pageFormat) async {
   final lorem = pw.LoremText();
 
   final products = <Product>[
-    Product('1', lorem.sentence(4),'',0, 3.99, 2),
+    Product('1', lorem.sentence(4), '', 0, 3.99, 2),
   ];
 
   final invoice = Invoice(
@@ -49,9 +50,6 @@ class Invoice {
   PdfColor get _baseTextColor =>
       baseColor.luminance < 0.5 ? _lightColor : _darkColor;
 
-  PdfColor get _accentTextColor =>
-      baseColor.luminance < 0.5 ? _lightColor : _darkColor;
-
   double get _total =>
       products.map<double>((p) => p.total).reduce((a, b) => a + b);
 
@@ -60,7 +58,6 @@ class Invoice {
   //String _logo;
 
   String _bgShape;
-  String _hdShape;
   String _chShape;
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat) async {
@@ -71,29 +68,27 @@ class Invoice {
     final font2 = await rootBundle.load('assets/fonts/roboto2.ttf');
     final font3 = await rootBundle.load('assets/fonts/roboto3.ttf');
 
-    _hdShape = await rootBundle.loadString('assets/Svg/HeadPKA.svg');
     _bgShape = await rootBundle.loadString('assets/Svg/FondPKA.svg');
     _chShape = await rootBundle.loadString('assets/Svg/ContHd.svg');
 
     // Add page to the PDF
     doc.addPage(
       pw.MultiPage(
-        pageTheme: _buildTheme(
-          pageFormat,
-          pw.Font.ttf(font1),
-          pw.Font.ttf(font2),
-          pw.Font.ttf(font3),
-        ),
-        header: _buildHeader,
-        footer: _buildFooter,
-        build: (context) => [
-          _contentHeader(context),
-          _contentTable(context),
-          pw.SizedBox(height: 20),
-          _contentFooter(context),
-          pw.SizedBox(height: 20),
-        ]
-      ),
+          pageTheme: _buildTheme(
+            pageFormat,
+            pw.Font.ttf(font1),
+            pw.Font.ttf(font2),
+            pw.Font.ttf(font3),
+          ),
+          header: _buildHeader,
+          footer: _buildFooter,
+          build: (context) => [
+                _contentHeader(context),
+                _contentTable(context),
+                pw.SizedBox(height: 20),
+                _contentFooter(context),
+                pw.SizedBox(height: 20),
+              ]),
     );
 
     // Return the PDF file content
@@ -103,34 +98,30 @@ class Invoice {
   }
 
   pw.Widget _buildHeader(pw.Context context) {
-    return pw.Stack(
-      children: <pw.Widget>[
-        pw.Column(
-      children: [
-        pw.Row(
-          children: [
+    return pw.Stack(children: <pw.Widget>[
+      pw.Column(
+        children: [
+          pw.Row(children: [
             pw.Container(
               height: 129,
             )
-          ]
+          ]),
+          pw.SizedBox(height: 40)
+        ],
+      ),
+      pw.Positioned(
+        top: 130,
+        left: 418.31,
+        child: pw.Text(
+          'Facture 0001',
+          style: pw.TextStyle(
+            fontSize: 17,
+            fontWeight: pw.FontWeight.bold,
+            color: PdfColor.fromInt(0xFF00A6F0),
+          ),
         ),
-       pw.SizedBox(height: 40)
-      ],
-    ),
-        pw.Positioned(
-          top: 130,
-          left: 418.31,
-          child:pw.Text(
-              'Facture 0001',
-              style: pw.TextStyle(
-                fontSize: 17,
-                fontWeight: pw.FontWeight.bold,
-                color: PdfColor.fromInt(0xFF00A6F0),
-              ),
-            ),
-        ),
-
-      ]);
+      ),
+    ]);
   }
 
   pw.Widget _buildFooter(pw.Context context) {
@@ -158,10 +149,10 @@ class Invoice {
   }
 
   pw.PageTheme _buildTheme(
-      PdfPageFormat pageFormat,pw.Font base, pw.Font bold, pw.Font italic) {
+      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
     return pw.PageTheme(
       pageFormat: pageFormat,
-      margin: pw.EdgeInsets.only(left:20,right: 20, bottom: 55) ,
+      margin: pw.EdgeInsets.only(left: 20, right: 20, bottom: 55),
       theme: pw.ThemeData.withFont(
         base: base,
         bold: bold,
@@ -190,7 +181,7 @@ class Invoice {
               children: [
                 pw.TextSpan(
                   text: 'Nom:   ',
-                  style:  pw.TextStyle(
+                  style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
                     //font: Gothic,
@@ -198,44 +189,41 @@ class Invoice {
                 ),
                 pw.TextSpan(
                   text: 'M. Mme Chalot\n',
-                  style:  pw.TextStyle(
-                    //fontFamily: 'Century Gothic',
-                  ),
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
                 ),
                 pw.TextSpan(
                   text: 'Adresse:   ',
-                  style:  pw.TextStyle(
+                  style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
                   ),
                 ),
                 pw.TextSpan(
                   text: '263 c impasse du dois saint paul 69390 Charly',
-                  style:  pw.TextStyle(
-                    //fontFamily: 'Century Gothic',
-                  ),
+                  style: pw.TextStyle(
+                      //fontFamily: 'Century Gothic',
+                      ),
                 ),
               ],
             ),
-            textAlign:  pw.TextAlign.left,
+            textAlign: pw.TextAlign.left,
           ),
         ),
-
         pw.Container(
           margin: pw.EdgeInsets.only(top: 145, left: 30),
           width: 500,
           child: pw.RichText(
             text: pw.TextSpan(
-                  text: 'Pose de carrelage salon, cuisine, séjour et hall',
-                  style:  pw.TextStyle(
-                    fontStyle: pw.FontStyle.italic,
-                  ),
+              text: 'Pose de carrelage salon, cuisine, séjour et hall',
+              style: pw.TextStyle(
+                fontStyle: pw.FontStyle.italic,
+              ),
             ),
-            textAlign:  pw.TextAlign.left,
+            textAlign: pw.TextAlign.left,
           ),
-
         )
-
       ],
     );
   }
