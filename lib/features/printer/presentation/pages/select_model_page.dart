@@ -87,33 +87,33 @@ class _SelectModelPageState extends State<SelectModelPage> {
               ),
             ),
             SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _modelId = 3;
-                });
-              },
-              child: Container(
-                height: size.height * .2,
-                width: double.maxFinite,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: _modelId == 3 ? Color(0xFF2E3191) : Colors.white),
-                child: Text('attestations'.toUpperCase(),
-                    style: TextStyle(
-                        fontFamily: 'Century Gothic',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: _modelId == 3 ? Colors.white : Colors.black)),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     setState(() {
+            //       _modelId = 3;
+            //     });
+            //   },
+            //   child: Container(
+            //     height: size.height * .2,
+            //     width: double.maxFinite,
+            //     alignment: Alignment.center,
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(15),
+            //         color: _modelId == 3 ? Color(0xFF2E3191) : Colors.white),
+            //     child: Text('attestations'.toUpperCase(),
+            //         style: TextStyle(
+            //             fontFamily: 'Century Gothic',
+            //             fontWeight: FontWeight.w600,
+            //             fontSize: 18,
+            //             color: _modelId == 3 ? Colors.white : Colors.black)),
+            //   ),
+            // ),
             Padding(
-              padding: EdgeInsets.only(top: size.height * .35),
+              padding: EdgeInsets.only(top: size.height * .55),
               child: Center(
                   child: InkWell(
                 onTap: () {
-                  if ([1, 2, 3].contains(_modelId)) {
+                  if ([1, 2].contains(_modelId)) {
                     Navigator.push(context, Printer(formatModel: _modelId));
                   }
                 },

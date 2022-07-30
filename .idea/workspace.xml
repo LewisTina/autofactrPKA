@@ -19,8 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="refactor some code">
+    <list default="true" id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="change the price devise">
+      <change afterPath="$PROJECT_DIR$/lib/features/printer/models/certificateData.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/corp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/corp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/printer/presentation/pages/select_model_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/printer/presentation/pages/select_model_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/printer/presentation/widgets/printer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/printer/presentation/widgets/printer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/invoice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/invoice.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +51,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
@@ -89,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659170716364</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="change the price devise">
+      <created>1659171163276</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659171163277</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -117,7 +130,8 @@
     <MESSAGE value="fix build issues" />
     <MESSAGE value="add the estimate pdf model" />
     <MESSAGE value="refactor some code" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor some code" />
+    <MESSAGE value="change the price devise" />
+    <option name="LAST_COMMIT_MESSAGE" value="change the price devise" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1095" height="535" key="DiffContextDialog" timestamp="1659166964102">
@@ -128,41 +142,49 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="421" y="102" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1659061966431" />
-    <state width="1236" height="264" key="GridCell.Tab.0.bottom" timestamp="1659165492038">
+    <state width="1236" height="257" key="GridCell.Tab.0.bottom" timestamp="1659177070188">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="264" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
-    <state width="1236" height="264" key="GridCell.Tab.0.center" timestamp="1659165492038">
+    <state width="1236" height="257" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1659177070188" />
+    <state width="1236" height="257" key="GridCell.Tab.0.center" timestamp="1659177070187">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="264" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
-    <state width="1236" height="264" key="GridCell.Tab.0.left" timestamp="1659165492036">
+    <state width="1236" height="257" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1659177070187" />
+    <state width="1236" height="257" key="GridCell.Tab.0.left" timestamp="1659177070186">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="264" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1659165492036" />
-    <state width="1236" height="264" key="GridCell.Tab.0.right" timestamp="1659165492038">
+    <state width="1236" height="257" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1659177070186" />
+    <state width="1236" height="257" key="GridCell.Tab.0.right" timestamp="1659177070187">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="264" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
+    <state width="1236" height="257" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1659177070187" />
+    <state x="563" y="182" width="432" height="307" key="RollbackChangesDialog" timestamp="1659175891900">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="563" y="182" width="432" height="307" key="RollbackChangesDialog/0.0.1280.720@0.0.1280.720" timestamp="1659175891900" />
     <state x="142" y="6" key="SettingsEditor" timestamp="1659064075473">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="142" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1659064075473" />
-    <state x="233" y="90" key="Vcs.Push.Dialog.v2" timestamp="1659170722400">
+    <state x="233" y="90" key="Vcs.Push.Dialog.v2" timestamp="1659171187154">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="233" y="90" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1659170722400" />
+    <state x="233" y="90" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1659171187154" />
     <state x="304" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1659067236135">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="304" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720@0.0.1280.720" timestamp="1659067236135" />
-    <state x="348" y="77" width="585" height="624" key="find.popup" timestamp="1659171022014">
+    <state x="348" y="77" width="585" height="624" key="find.popup" timestamp="1659179994208">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="348" y="77" width="585" height="624" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1659171022014" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659158626291">
+    <state x="348" y="77" width="585" height="624" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1659179994208" />
+    <state x="298" y="161" key="run.anything.popup" timestamp="1659177397409">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1659158626291" />
+    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1659177397409" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659172133533">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1659172133533" />
   </component>
 </project>

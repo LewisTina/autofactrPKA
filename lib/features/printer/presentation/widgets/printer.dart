@@ -1,3 +1,4 @@
+import 'package:autofact/features/printer/models/certificateData.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
@@ -6,7 +7,7 @@ import 'package:printing/printing.dart';
 import '../../../../body.dart';
 
 class Printer extends MaterialPageRoute<void> {
-  Printer({@required int formatModel})
+  Printer({@required int formatModel, CertificateData data})
       : super(builder: (BuildContext context) {
           String fileName = "";
           String currentStringDate =
@@ -24,7 +25,7 @@ class Printer extends MaterialPageRoute<void> {
               break;
             case 3:
               {
-                fileName = "ATTESTATION " + currentStringDate;
+                fileName = "ATTESTATION " + data.name + data.lastname;
               }
               break;
           }
@@ -43,7 +44,7 @@ class Printer extends MaterialPageRoute<void> {
               ),
               body: PdfPreview(
                 build: (format) =>
-                    generateInvoice(PdfPageFormat.a4, formatModel),
+                    generateInvoice(PdfPageFormat.a4, formatModel, data: data),
                 pdfFileName: fileName,
               ),
             ),

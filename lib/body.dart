@@ -15,7 +15,9 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import 'features/printer/models/certificateData.dart';
 import 'features/printer/presentation/pages/select_model_page.dart';
+import 'features/printer/presentation/widgets/certificate_form.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _BodyState extends State<Body> {
   static var FactOrProfNumber;
   static var jour;
   static var Numero;
+  static bool isFact = true;
 
   @override
   void dispose() {
@@ -34,6 +37,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // bool isFact = true;
     const locale = "fr";
     final dateTimeFormat = DateFormat.yMMMMd(locale);
     var DateDuJour = new DateTime.now();
@@ -56,14 +60,22 @@ class _BodyState extends State<Body> {
             DateOfMounth(),
             LiteRollingSwitch(
               value: false,
-              textOn: 'Proforma',
-              textOff: 'Facture',
+              textOn: 'Attestation',
+              textOff: 'Facture/Devis',
               colorOn: Color(0xFF0071E3),
               colorOff: Color(0xFF2E3191),
               iconOn: Icons.edit,
               iconOff: Icons.print,
               onChanged: (bool state) {
                 FactOrProfNumber = '$Numero';
+                isFact = !state;
+                print("is fact : $isFact");
+                if (isFact == false) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CertificateForm()));
+                }
               },
             ),
           ]),
@@ -97,7 +109,7 @@ class _BodyState extends State<Body> {
           color: Color(0xFF0071E3),
           textColor: Colors.white,
           label: Text(
-            'Information Sur Produits',
+            isFact == true ? 'Information Sur Produits' : "Générer",
             style: TextStyle(
               fontFamily: 'Century Gothic',
               fontSize: 20,
@@ -189,6 +201,10 @@ class _BasicInformations extends State<BasicInformations> {
   var devoir = '';
   var ob = '';
   var ad = '';
+  var firstname = '';
+  var lastname = '';
+  var startDate = '';
+  var endDate = "";
   static _BasicInformations globalInstance = new _BasicInformations();
 
   _onChanged(String value) {
@@ -271,40 +287,42 @@ class _BasicInformations extends State<BasicInformations> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(children: <Widget>[
-            TextFormField(
-              controller: doit,
-              onChanged: (String value) {
-                _onChanged(value);
-              },
-              decoration: InputDecoration(
-                labelText: 'Doit',
-                prefixIcon: Icon(Icons.assignment_ind),
+        Visibility(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(children: <Widget>[
+              TextFormField(
+                controller: doit,
+                onChanged: (String value) {
+                  _onChanged(value);
+                },
+                decoration: InputDecoration(
+                  labelText: 'Doit',
+                  prefixIcon: Icon(Icons.assignment_ind),
+                ),
               ),
-            ),
-            TextFormField(
-              controller: adresse,
-              onChanged: (String value) {
-                _onChanged3(value);
-              },
-              decoration: InputDecoration(
-                labelText: 'Adresse',
-                prefixIcon: Icon(Icons.location_city_rounded),
+              TextFormField(
+                controller: adresse,
+                onChanged: (String value) {
+                  _onChanged3(value);
+                },
+                decoration: InputDecoration(
+                  labelText: 'Adresse',
+                  prefixIcon: Icon(Icons.location_city_rounded),
+                ),
               ),
-            ),
-            TextFormField(
-              controller: objet,
-              onChanged: (String value) {
-                _onChanged2(value);
-              },
-              decoration: InputDecoration(
-                labelText: 'Objet',
-                prefixIcon: Icon(Icons.style),
+              TextFormField(
+                controller: objet,
+                onChanged: (String value) {
+                  _onChanged2(value);
+                },
+                decoration: InputDecoration(
+                  labelText: 'Objet',
+                  prefixIcon: Icon(Icons.style),
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ],
     );
@@ -796,8 +814,8 @@ class TableHead extends StatelessWidget {
   }
 }
 
-Future<Uint8List> generateInvoice(
-    PdfPageFormat pageFormat, int formatModel) async {
+Future<Uint8List> generateInvoice(PdfPageFormat pageFormat, int formatModel,
+    {CertificateData data}) async {
   final invoice = Invoice(
     invoiceNumber: _BodyState.Numero,
     products: _EditionTableauState.globalInstance2.donnees,
@@ -808,7 +826,7 @@ Future<Uint8List> generateInvoice(
     accentColor: PdfColors.blueGrey900,
   );
 
-  return await invoice.buildPdf(pageFormat, formatModel);
+  return await invoice.buildPdf(pageFormat, formatModel, data);
 }
 
 class Invoice {
@@ -856,7 +874,8 @@ class Invoice {
   String _chShape;
   String headerImg, footerImg;
 
-  Future<Uint8List> buildPdf(PdfPageFormat pageFormat, int formatModel) async {
+  Future<Uint8List> buildPdf(
+      PdfPageFormat pageFormat, int formatModel, CertificateData data) async {
     // Create a PDF document.
     final doc = pw.Document();
 
@@ -935,7 +954,8 @@ class Invoice {
                     ? _contentDevisFooter(context, _font2, _font)
                     : formatModel == 2
                         ? _contentDevisFooter(context, _font2, _font)
-                        : _contentAttestationFooter(context, _font, _font2),
+                        : _contentAttestationFooter(context, _font, _font2,
+                            data: data),
                 pw.SizedBox(height: 20),
               ]),
     );
@@ -1370,7 +1390,7 @@ class Invoice {
                   ),
                 ),
                 pw.TextSpan(
-                  text: fnumberToLetter(_grandTotal.round()) + ' XFA' + '\n',
+                  text: fnumberToLetter(_grandTotal.round()) + ' XAF' + '\n',
                   style: pw.TextStyle(
                     font: font2,
                     fontStyle: pw.FontStyle.italic,
@@ -1384,7 +1404,8 @@ class Invoice {
   }
 
   pw.Widget _contentAttestationFooter(
-      pw.Context context, dynamic font, dynamic font2) {
+      pw.Context context, dynamic font, dynamic font2,
+      {CertificateData data}) {
     return pw.Container(
         alignment: pw.Alignment.center,
         margin: pw.EdgeInsets.only(top: 200),
@@ -1400,13 +1421,21 @@ class Invoice {
                   children: [
                     pw.TextSpan(
                       text:
-                          'Je sousigné Jordan Felex NGUE en qualité de formateur en xxxxxxxxxxxxxxxxxxx\n',
+                          'Je sousigné Jordan Felex NGUE en qualité de formateur en ',
                       style: pw.TextStyle(
                         font: font,
                         fontStyle: pw.FontStyle.italic,
                         color: PdfColor.fromInt(0xFF2E3191),
                         fontWeight: pw.FontWeight.bold,
                       ),
+                    ),
+                    pw.TextSpan(
+                      text: '${data?.domain}' + '\n',
+                      style: pw.TextStyle(
+                          font: font,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF2E3191),
+                          fontWeight: pw.FontWeight.bold),
                     ),
                     pw.TextSpan(
                       text: 'Atteste que, M.Mlle/Mme' + '\n',
@@ -1422,7 +1451,7 @@ class Invoice {
               )),
           pw.Container(
               margin: pw.EdgeInsets.only(top: 5),
-              child: pw.Text("Nom & Prénom",
+              child: pw.Text("${data?.name} ${data?.lastname}",
                   style: pw.TextStyle(
                     font: font,
                     fontStyle: pw.FontStyle.italic,
@@ -1465,7 +1494,7 @@ class Invoice {
                         ),
                       ),
                       pw.TextSpan(
-                        text: ' xxxxxxxxxxxx \n',
+                        text: ' ${data?.town} \n',
                         style: pw.TextStyle(
                             font: font,
                             fontStyle: pw.FontStyle.italic,
@@ -1481,7 +1510,7 @@ class Invoice {
                         ),
                       ),
                       pw.TextSpan(
-                        text: ' jj/mm/yy',
+                        text: ' ${data?.startDate}',
                         style: pw.TextStyle(
                             font: font,
                             fontStyle: pw.FontStyle.italic,
@@ -1497,7 +1526,7 @@ class Invoice {
                         ),
                       ),
                       pw.TextSpan(
-                        text: ' jj/mm/yy \n',
+                        text: ' ${data?.endDate} \n',
                         style: pw.TextStyle(
                             font: font,
                             fontStyle: pw.FontStyle.italic,
@@ -1666,7 +1695,7 @@ class Invoice {
 }
 
 String _formatCurrency(double amount) {
-  return '\XFA${amount.toStringAsFixed(2)}';
+  return '\XAF${amount.toStringAsFixed(2)}';
 }
 
 class Product {
