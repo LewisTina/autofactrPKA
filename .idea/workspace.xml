@@ -19,13 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="change the price devise">
-      <change afterPath="$PROJECT_DIR$/lib/features/printer/models/certificateData.dart" afterDir="false" />
+    <list default="true" id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="add form the get certificate data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Svg/FondE_GEG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Svg/FondE_GEG.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Svg/FootE_GEG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Svg/FootE_GEG.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Svg/Foot_GEG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Svg/Foot_GEG.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Svg/Head_GEG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Svg/Head_GEG.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/corp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/corp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/printer/presentation/pages/select_model_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/printer/presentation/pages/select_model_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/printer/presentation/widgets/printer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/printer/presentation/widgets/printer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/invoice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/invoice.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659171163277</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add form the get certificate data">
+      <created>1659183375327</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659183375328</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -131,7 +138,8 @@
     <MESSAGE value="add the estimate pdf model" />
     <MESSAGE value="refactor some code" />
     <MESSAGE value="change the price devise" />
-    <option name="LAST_COMMIT_MESSAGE" value="change the price devise" />
+    <MESSAGE value="add form the get certificate data" />
+    <option name="LAST_COMMIT_MESSAGE" value="add form the get certificate data" />
   </component>
   <component name="WindowStateProjectService">
     <state x="93" y="93" width="1095" height="535" key="DiffContextDialog" timestamp="1659166964102">
@@ -142,22 +150,22 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="421" y="102" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1659061966431" />
-    <state width="1236" height="257" key="GridCell.Tab.0.bottom" timestamp="1659177070188">
+    <state width="1236" height="263" key="GridCell.Tab.0.bottom" timestamp="1659187767827">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="257" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1659177070188" />
-    <state width="1236" height="257" key="GridCell.Tab.0.center" timestamp="1659177070187">
+    <state width="1236" height="263" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1659187767827" />
+    <state width="1236" height="263" key="GridCell.Tab.0.center" timestamp="1659187767826">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="257" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1659177070187" />
-    <state width="1236" height="257" key="GridCell.Tab.0.left" timestamp="1659177070186">
+    <state width="1236" height="263" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1659187767826" />
+    <state width="1236" height="263" key="GridCell.Tab.0.left" timestamp="1659187767825">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="257" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1659177070186" />
-    <state width="1236" height="257" key="GridCell.Tab.0.right" timestamp="1659177070187">
+    <state width="1236" height="263" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1659187767825" />
+    <state width="1236" height="263" key="GridCell.Tab.0.right" timestamp="1659187767826">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1236" height="257" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1659177070187" />
+    <state width="1236" height="263" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1659187767826" />
     <state x="563" y="182" width="432" height="307" key="RollbackChangesDialog" timestamp="1659175891900">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -174,17 +182,17 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="304" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720@0.0.1280.720" timestamp="1659067236135" />
-    <state x="348" y="77" width="585" height="624" key="find.popup" timestamp="1659179994208">
+    <state x="348" y="77" width="585" height="624" key="find.popup" timestamp="1659192431713">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="348" y="77" width="585" height="624" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1659179994208" />
+    <state x="348" y="77" width="585" height="624" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1659192431713" />
     <state x="298" y="161" key="run.anything.popup" timestamp="1659177397409">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1659177397409" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659172133533">
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659188181753">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1659172133533" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1659188181753" />
   </component>
 </project>

@@ -117,7 +117,7 @@ class Invoice {
           style: pw.TextStyle(
             fontSize: 17,
             fontWeight: pw.FontWeight.bold,
-            color: PdfColor.fromInt(0xFF00A6F0),
+            color: PdfColor.fromInt(0xFF0071E3),
           ),
         ),
       ),
@@ -263,7 +263,7 @@ class Invoice {
                 pw.Divider(color: accentColor),
                 pw.DefaultTextStyle(
                   style: pw.TextStyle(
-                    color: PdfColor.fromInt(0xFF00A6F0),
+                    color: PdfColor.fromInt(0xFF0071E3),
                     fontSize: 14,
                     fontWeight: pw.FontWeight.bold,
                   ),
@@ -298,11 +298,11 @@ class Invoice {
       border: null,
       cellAlignment: pw.Alignment.centerLeft,
       headerDecoration: pw.BoxDecoration(
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
-        color: PdfColor.fromInt(0xFF00A6F0),
+        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(3)),
+        color: PdfColor.fromInt(0xFF0071E3),
       ),
       headerHeight: 25,
-      cellHeight: 40,
+      cellHeight: 15,
       cellAlignments: {
         0: pw.Alignment.centerLeft,
         1: pw.Alignment.centerLeft,
@@ -345,7 +345,7 @@ class Invoice {
 }
 
 String _formatCurrency(double amount) {
-  return '\XAF${amount.toStringAsFixed(2)}';
+  return '\${amount.toStringAsFixed(2)}';
 }
 
 class Product {

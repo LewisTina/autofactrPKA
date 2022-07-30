@@ -531,8 +531,7 @@ class _EditionTableauState extends State<EditionTableau> {
       }
       ;
 
-      globalInstance2.donnees
-          .add(Product(Num, designation, reduction, quantity, price));
+      globalInstance2.donnees.add(Product(Num, designation, quantity, price));
     }
 
     if (ligne.length >= 1) {
@@ -609,8 +608,7 @@ class _EditionTableauState extends State<EditionTableau> {
       ;
 
       if (Qte[i].text.isNotEmpty) {
-        globalInstance2.donnees
-            .add(Product(Num, designation, reduction, quantity, price));
+        globalInstance2.donnees.add(Product(Num, designation, quantity, price));
       }
     }
 
@@ -859,10 +857,10 @@ class Invoice {
   double get _total =>
       products.map<double>((p) => p.total).reduce((a, b) => a + b);
 
-  double get _reduc =>
-      products.map<double>((p) => p.reduction).reduce((a, b) => a + b);
+  // double get _reduc =>
+  //     products.map<double>((p) => p.reduction).reduce((a, b) => a + b);
 
-  double get _grandTotal => _total - _reduc;
+  double get _grandTotal => _total;
 
   var montant = double.tryParse(_EditionTableauState.globalInstance2.Montant);
 
@@ -969,9 +967,9 @@ class Invoice {
 
   pw.Widget _buildDevisHeader(pw.Context context) {
     return pw.Stack(children: <pw.Widget>[
-      // pw.SvgImage(svg: headerImg),
+      pw.SvgImage(svg: headerImg),
       pw.Container(
-        margin: pw.EdgeInsets.only(left: 380, top: 45),
+        margin: pw.EdgeInsets.only(left: 385, top: 31.5),
         child: pw.RichText(
           text: pw.TextSpan(
               text: "DEVIS N° ".toUpperCase(),
@@ -1006,7 +1004,7 @@ class Invoice {
     return pw.Stack(children: <pw.Widget>[
       pw.SvgImage(svg: headerImg),
       pw.Container(
-        margin: pw.EdgeInsets.only(left: 620, top: 45),
+        margin: pw.EdgeInsets.only(left: 600, top: 50),
         child: pw.RichText(
           text: pw.TextSpan(
               text: "FACTURE N° ".toUpperCase(),
@@ -1042,7 +1040,7 @@ class Invoice {
   }
 
   pw.Widget _buildFooter(pw.Context context) {
-    return pw.SvgImage(svg: footerImg);
+    return pw.Container(child: pw.SvgImage(svg: footerImg));
   }
 
   pw.PageTheme _buildTheme(
@@ -1053,7 +1051,7 @@ class Invoice {
       pw.Font italic) {
     return pw.PageTheme(
       pageFormat: pageFormat,
-      margin: pw.EdgeInsets.only(left: 20, right: 20, bottom: 55),
+      margin: pw.EdgeInsets.only(left: 20, right: 20, bottom: 30),
       theme: pw.ThemeData.withFont(
         base: base,
         bold: bold,
@@ -1138,7 +1136,9 @@ class Invoice {
     return pw.Column(
       children: <pw.Widget>[
         pw.Container(
-          margin: pw.EdgeInsets.only(left: 390, top: 25),
+          margin: pw.EdgeInsets.only(
+            left: 375,
+          ),
           child: pw.RichText(
             text: pw.TextSpan(
               text: _BodyState.jour,
@@ -1153,7 +1153,7 @@ class Invoice {
           ),
         ),
         pw.Container(
-          margin: pw.EdgeInsets.only(top: 50, left: 10),
+          margin: pw.EdgeInsets.only(top: 35, left: 10),
           alignment: pw.Alignment.centerLeft,
           child: pw.RichText(
             text: pw.TextSpan(
@@ -1221,9 +1221,6 @@ class Invoice {
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Expanded(
-            flex: 2,
-          ),
-          pw.Expanded(
             flex: 1,
             child: pw.DefaultTextStyle(
               style: const pw.TextStyle(
@@ -1241,17 +1238,17 @@ class Invoice {
                     ],
                   ),
                   pw.SizedBox(height: 5),
-                  pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Text('Réduction:'),
-                      pw.Text('$_reduc'),
-                    ],
-                  ),
+                  // pw.Row(
+                  //   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     pw.Text('Réduction:'),
+                  //     pw.Text('$_reduc'),
+                  //   ],
+                  // ),
                   pw.Divider(color: accentColor),
                   pw.DefaultTextStyle(
                     style: pw.TextStyle(
-                      color: PdfColor.fromInt(0xFF00A6F0),
+                      color: PdfColor.fromInt(0xFF0071E3),
                       fontSize: 14,
                       fontWeight: pw.FontWeight.bold,
                     ),
@@ -1361,13 +1358,13 @@ class Invoice {
     }
     return pw.Column(children: [
       pw.Container(
-          height: 27,
+          height: 25,
           alignment: pw.Alignment.center,
           decoration: pw.BoxDecoration(
-              color: PdfColor.fromInt(0xFF00A6F0),
+              color: PdfColor.fromInt(0xFF0071E3),
               borderRadius: const pw.BorderRadius.only(
-                  bottomLeft: pw.Radius.circular(15),
-                  bottomRight: pw.Radius.circular(15))),
+                  bottomLeft: pw.Radius.circular(3),
+                  bottomRight: pw.Radius.circular(3))),
           child: pw.Text(_grandTotal.toString(),
               style: pw.TextStyle(
                   color: PdfColor.fromInt(0xFFFFFFFF),
@@ -1399,7 +1396,7 @@ class Invoice {
               ],
             ),
             textAlign: pw.TextAlign.left,
-          ))
+          )),
     ]);
   }
 
@@ -1561,14 +1558,7 @@ class Invoice {
 
   pw.Widget _contentTable(
       pw.Context context, dynamic font, dynamic fontRegular) {
-    const tableHeaders = [
-      'N°',
-      'Désignation',
-      'Réduction',
-      'Qté',
-      'Prix U.',
-      'Prix T.'
-    ];
+    const tableHeaders = ['N°', 'Désignation', 'Qté', 'Prix U.', 'Prix T.'];
 
     return pw.Padding(
         padding: pw.EdgeInsets.only(top: 20),
@@ -1577,19 +1567,18 @@ class Invoice {
           cellAlignment: pw.Alignment.centerLeft,
           headerDecoration: pw.BoxDecoration(
             borderRadius: const pw.BorderRadius.only(
-                topLeft: pw.Radius.circular(15),
-                topRight: pw.Radius.circular(15)),
-            color: PdfColor.fromInt(0xFF00A6F0),
+                topLeft: pw.Radius.circular(3),
+                topRight: pw.Radius.circular(3)),
+            color: PdfColor.fromInt(0xFF0071E3),
           ),
           headerHeight: 25,
-          cellHeight: 40,
+          cellHeight: 15,
           cellAlignments: {
             0: pw.Alignment.center,
-            1: pw.Alignment.centerLeft,
+            1: pw.Alignment.center,
             2: pw.Alignment.center,
             3: pw.Alignment.center,
-            4: pw.Alignment.centerRight,
-            5: pw.Alignment.centerRight,
+            4: pw.Alignment.center
           },
           headerStyle: pw.TextStyle(
             font: font,
@@ -1626,35 +1615,29 @@ class Invoice {
 
   pw.Widget _contentDevisTable(
       pw.Context context, dynamic font, dynamic fontRegular) {
-    const tableHeaders = [
-      'N°',
-      'Désignation',
-      'Réduction',
-      'Qté',
-      'Prix U.',
-      'Prix T.'
-    ];
+    const tableHeaders = ['N°', 'Désignation', 'Qté', 'Prix U.', 'Prix T.'];
 
     return pw.Padding(
         padding: pw.EdgeInsets.only(top: 20),
         child: pw.Table.fromTextArray(
           border: null,
           cellAlignment: pw.Alignment.centerLeft,
+          headerPadding: pw.EdgeInsets.only(right: 20),
+          cellPadding: pw.EdgeInsets.only(right: 20),
           headerDecoration: pw.BoxDecoration(
             borderRadius: const pw.BorderRadius.only(
-                topLeft: pw.Radius.circular(15),
-                topRight: pw.Radius.circular(15)),
-            color: PdfColor.fromInt(0xFF00A6F0),
+                topLeft: pw.Radius.circular(3),
+                topRight: pw.Radius.circular(3)),
+            color: PdfColor.fromInt(0xFF0071E3),
           ),
           headerHeight: 25,
-          cellHeight: 40,
+          cellHeight: 15,
           cellAlignments: {
             0: pw.Alignment.center,
             1: pw.Alignment.centerLeft,
-            2: pw.Alignment.center,
+            2: pw.Alignment.centerLeft,
             3: pw.Alignment.center,
             4: pw.Alignment.centerRight,
-            5: pw.Alignment.centerRight,
           },
           headerStyle: pw.TextStyle(
             font: font,
@@ -1695,21 +1678,21 @@ class Invoice {
 }
 
 String _formatCurrency(double amount) {
-  return '\XAF${amount.toStringAsFixed(2)}';
+  return '${amount.toStringAsFixed(2)}';
 }
 
 class Product {
   const Product(
     this.Num,
     this.designation,
-    this.reduction,
+    // this.reduction,
     this.quantity,
     this.price,
   );
 
   final String Num;
   final String designation;
-  final double reduction;
+  // final double reduction;
   final double quantity;
   final double price;
   double get total => price * quantity;
@@ -1721,12 +1704,10 @@ class Product {
       case 1:
         return designation;
       case 2:
-        return reduction.toString();
-      case 3:
         return quantity.toString();
-      case 4:
+      case 3:
         return _formatCurrency(price);
-      case 5:
+      case 4:
         return _formatCurrency(total);
     }
     return '';
