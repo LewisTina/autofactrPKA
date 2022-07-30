@@ -1,7 +1,6 @@
+import 'package:autofact/features/printer/presentation/widgets/printer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import '../../../../body.dart';
 
 class SelectModelPage extends StatefulWidget {
   const SelectModelPage({Key key}) : super(key: key);
@@ -14,7 +13,6 @@ class _SelectModelPageState extends State<SelectModelPage> {
   int _modelId = 0;
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +22,7 @@ class _SelectModelPageState extends State<SelectModelPage> {
               fontWeight: FontWeight.w400,
             )),
         centerTitle: true,
-        backgroundColor: Color(0xFF7451eb),
+        backgroundColor: Color(0xFF2E3191),
         elevation: 0.0,
       ),
       body: Container(
@@ -52,7 +50,7 @@ class _SelectModelPageState extends State<SelectModelPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color:
-                              _modelId == 1 ? Color(0xFF7451eb) : Colors.white),
+                              _modelId == 1 ? Color(0xFF2E3191) : Colors.white),
                       child: Text('Facture'.toUpperCase(),
                           style: TextStyle(
                             fontFamily: 'Century Gothic',
@@ -75,7 +73,7 @@ class _SelectModelPageState extends State<SelectModelPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color:
-                              _modelId == 2 ? Color(0xFF7451eb) : Colors.white),
+                              _modelId == 2 ? Color(0xFF2E3191) : Colors.white),
                       child: Text('Devis'.toUpperCase(),
                           style: TextStyle(
                               fontFamily: 'Century Gothic',
@@ -101,7 +99,7 @@ class _SelectModelPageState extends State<SelectModelPage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: _modelId == 3 ? Color(0xFF7451eb) : Colors.white),
+                    color: _modelId == 3 ? Color(0xFF2E3191) : Colors.white),
                 child: Text('attestations'.toUpperCase(),
                     style: TextStyle(
                         fontFamily: 'Century Gothic',
@@ -125,7 +123,7 @@ class _SelectModelPageState extends State<SelectModelPage> {
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xFF7451eb).withOpacity(.8),
+                    color: Color(0xFF2E3191).withOpacity(.8),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

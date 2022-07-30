@@ -58,13 +58,12 @@ class _BodyState extends State<Body> {
               value: false,
               textOn: 'Proforma',
               textOff: 'Facture',
-              colorOn: Color.fromRGBO(0, 185, 255, 1),
-              colorOff: Color(0xFF7451eb),
+              colorOn: Color(0xFF0071E3),
+              colorOff: Color(0xFF2E3191),
               iconOn: Icons.edit,
               iconOff: Icons.print,
               onChanged: (bool state) {
-                FactOrProfNumber =
-                    '${(state) ? 'Proforma N°' : 'Facture N°'} $Numero';
+                FactOrProfNumber = '$Numero';
               },
             ),
           ]),
@@ -95,7 +94,7 @@ class _BodyState extends State<Body> {
           onPressed: () {
             Navigator.push(context, InfosCommande());
           },
-          color: Color.fromRGBO(0, 185, 255, 1),
+          color: Color(0xFF0071E3),
           textColor: Colors.white,
           label: Text(
             'Information Sur Produits',
@@ -147,7 +146,7 @@ class DateOfMounth extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
           gradient: LinearGradient(
-            colors: [Color(0xFF7451eb), Color.fromRGBO(0, 185, 255, 1)],
+            colors: [Color(0xFF2E3191), Color(0xFF0071E3)],
           ),
           boxShadow: [
             BoxShadow(
@@ -238,7 +237,7 @@ class _BasicInformations extends State<BasicInformations> {
                     children: <Widget>[
                       Icon(
                         Icons.assignment_ind,
-                        color: Color.fromRGBO(0, 185, 255, 1),
+                        color: Color(0xFF0071E3),
                       ),
                       SizedBox(width: 10),
                       Text(
@@ -326,7 +325,7 @@ class InfosCommande extends MaterialPageRoute<void> {
                       fontWeight: FontWeight.w400,
                     )),
                 elevation: 0.0,
-                backgroundColor: Color(0xFF7451eb),
+                backgroundColor: Color(0xFF2E3191),
               ),
               body: EditionTableau());
         });
@@ -641,7 +640,7 @@ class _EditionTableauState extends State<EditionTableau> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF7451eb),
+        color: Color(0xFF2E3191),
         shape: CircularNotchedRectangle(),
         child: Container(
           padding: EdgeInsets.only(
@@ -660,7 +659,7 @@ class _EditionTableauState extends State<EditionTableau> {
             hoverElevation: 0,
             focusElevation: 0,
             highlightElevation: 0,
-            textColor: Color(0xFF7451eb),
+            textColor: Color(0xFF2E3191),
             child: Text("Construire",
                 style: TextStyle(
                   fontFamily: 'Century Gothic',
@@ -679,7 +678,7 @@ class _EditionTableauState extends State<EditionTableau> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onDone,
-        backgroundColor: Color.fromRGBO(0, 185, 255, 1),
+        backgroundColor: Color(0xFF0071E3),
         child: Icon(Icons.add_box),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -716,7 +715,7 @@ class TableHead extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.circular(12)),
-                    color: Color.fromRGBO(0, 185, 255, 1),
+                    color: Color(0xFF0071E3),
                   ),
                   child: Text(
                     "Qté",
@@ -737,7 +736,7 @@ class TableHead extends StatelessWidget {
                     border: Border(
                         right: BorderSide(color: Colors.white),
                         left: BorderSide(color: Colors.white)),
-                    color: Color.fromRGBO(0, 185, 255, 1),
+                    color: Color(0xFF0071E3),
                   ),
                   child: Text(
                     "Désignation",
@@ -758,7 +757,7 @@ class TableHead extends StatelessWidget {
                     border: Border(
                         right: BorderSide(color: Colors.white),
                         left: BorderSide(color: Colors.white)),
-                    color: Color.fromRGBO(0, 185, 255, 1),
+                    color: Color(0xFF0071E3),
                   ),
                   child: Text(
                     "Prix U.",
@@ -778,7 +777,7 @@ class TableHead extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius:
                         BorderRadius.only(topRight: Radius.circular(12)),
-                    color: Color.fromRGBO(0, 185, 255, 1),
+                    color: Color(0xFF0071E3),
                   ),
                   child: Text(
                     "Réduc",
@@ -795,31 +794,6 @@ class TableHead extends StatelessWidget {
       ],
     );
   }
-}
-
-class Printer extends MaterialPageRoute<void> {
-  Printer({@required int formatModel})
-      : super(builder: (BuildContext context) {
-          return Scaffold(
-            body: Scaffold(
-              backgroundColor: const Color(0xffffffff),
-              appBar: AppBar(
-                centerTitle: true,
-                title: Text('Validation',
-                    style: TextStyle(
-                      fontFamily: 'Century Gothic',
-                      fontWeight: FontWeight.w400,
-                    )),
-                backgroundColor: Color(0xFF7451eb),
-                elevation: 0.0,
-              ),
-              body: PdfPreview(
-                build: (format) =>
-                    generateInvoice(PdfPageFormat.a4, formatModel),
-              ),
-            ),
-          );
-        });
 }
 
 Future<Uint8List> generateInvoice(
@@ -894,7 +868,9 @@ class Invoice {
       case 1:
         {
           //bg des factures
-          _bgShape = await rootBundle.loadString('assets/Svg/FondPKA.svg');
+          _bgShape = await rootBundle.loadString('assets/Svg/Fond_GEG.svg');
+          footerImg = await rootBundle.loadString('assets/Svg/Foot_GEG.svg');
+          headerImg = await rootBundle.loadString('assets/Svg/Head_GEG.svg');
         }
         break;
       case 2:
@@ -908,18 +884,26 @@ class Invoice {
       case 3:
         {
           //bg des attestations
-          _bgShape = await rootBundle.loadString('assets/Svg/Fond_GEG.svg');
+          _bgShape = await rootBundle.loadString('assets/Svg/FondA_GEG.svg');
         }
         break;
     }
 
     _chShape = await rootBundle.loadString('assets/Svg/ContHd.svg');
-
+    final _font = await PdfGoogleFonts.montserratBoldItalic();
+    final _font2 = await PdfGoogleFonts.montserratMediumItalic();
+    final _fontBold = await PdfGoogleFonts.montserratBold();
+    final _fontRegular = await PdfGoogleFonts.montserratRegular();
     // Add page to the PDF
     doc.addPage(
       pw.MultiPage(
           pageTheme: _buildTheme(
-            pageFormat,
+            [1, 3].contains(formatModel)
+                ? PdfPageFormat.a4.landscape
+                : pageFormat,
+            [1, 3].contains(formatModel)
+                ? pw.PageOrientation.landscape
+                : pw.PageOrientation.portrait,
             pw.Font.ttf(font1),
             pw.Font.ttf(font2),
             pw.Font.ttf(font3),
@@ -928,29 +912,30 @@ class Invoice {
               ? _buildHeader
               : formatModel == 2
                   ? _buildDevisHeader
-                  : _buildHeader,
+                  : _buildAttestationHeader,
           footer: formatModel == 1
               ? _buildFooter
               : formatModel == 2
                   ? _buildDevisFooter
-                  : _buildFooter,
+                  : _buildAttestionFooter,
           build: (context) => [
                 formatModel == 1
-                    ? _contentHeader(context)
+                    ? _contentHeader(context, _fontBold, _fontRegular, _font2)
                     : formatModel == 2
-                        ? _contentDevisHeader(context)
-                        : _contentHeader(context),
+                        ? _contentDevisHeader(
+                            context, _fontBold, _fontRegular, _font2)
+                        : _contentAttestationHeader(context),
                 formatModel == 1
-                    ? _contentTable(context)
+                    ? _contentTable(context, _fontBold, _fontRegular)
                     : formatModel == 2
-                        ? _contentDevisTable(context)
-                        : _contentTable(context),
+                        ? _contentDevisTable(context, _fontBold, _fontRegular)
+                        : _contentAttestationTable(context),
                 pw.SizedBox(height: 20),
                 formatModel == 1
-                    ? _contentFooter(context)
+                    ? _contentDevisFooter(context, _font2, _font)
                     : formatModel == 2
-                        ? _contentDevisFooter(context)
-                        : _contentFooter(context),
+                        ? _contentDevisFooter(context, _font2, _font)
+                        : _contentAttestationFooter(context, _font, _font2),
                 pw.SizedBox(height: 20),
               ]),
     );
@@ -963,32 +948,66 @@ class Invoice {
   }
 
   pw.Widget _buildDevisHeader(pw.Context context) {
-    return pw.Stack(
-        children: <pw.Widget>[pw.SvgImage(svg: headerImg), pw.Container()]);
+    return pw.Stack(children: <pw.Widget>[
+      // pw.SvgImage(svg: headerImg),
+      pw.Container(
+        margin: pw.EdgeInsets.only(left: 380, top: 45),
+        child: pw.RichText(
+          text: pw.TextSpan(
+              text: "DEVIS N° ".toUpperCase(),
+              style: pw.TextStyle(
+                // font: _fontBold,
+                fontSize: 15,
+                color: PdfColors.black,
+                fontWeight: pw.FontWeight.bold,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: "$Num".toUpperCase(),
+                  style: pw.TextStyle(
+                    // font: font,
+                    fontSize: 15,
+                    color: PdfColor.fromInt(0xFF0071E3),
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                )
+              ]),
+          textAlign: pw.TextAlign.left,
+        ),
+      ),
+    ]);
+  }
+
+  pw.Widget _buildAttestationHeader(pw.Context context) {
+    return pw.Container();
   }
 
   pw.Widget _buildHeader(pw.Context context) {
     return pw.Stack(children: <pw.Widget>[
-      pw.Column(
-        children: [
-          pw.Row(children: [
-            pw.Container(
-              height: 129,
-            )
-          ]),
-          pw.SizedBox(height: 40)
-        ],
-      ),
-      pw.Positioned(
-        top: 130,
-        left: 390.31,
-        child: pw.Text(
-          Num,
-          style: pw.TextStyle(
-            fontSize: 13.5,
-            fontWeight: pw.FontWeight.bold,
-            color: PdfColor.fromInt(0xFF00A6F0),
-          ),
+      pw.SvgImage(svg: headerImg),
+      pw.Container(
+        margin: pw.EdgeInsets.only(left: 620, top: 45),
+        child: pw.RichText(
+          text: pw.TextSpan(
+              text: "FACTURE N° ".toUpperCase(),
+              style: pw.TextStyle(
+                // font: _fontBold,
+                fontSize: 15,
+                color: PdfColors.black,
+                fontWeight: pw.FontWeight.bold,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: "$Num".toUpperCase(),
+                  style: pw.TextStyle(
+                    // font: font,
+                    fontSize: 15,
+                    color: PdfColor.fromInt(0xFF0071E3),
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                )
+              ]),
+          textAlign: pw.TextAlign.left,
         ),
       ),
     ]);
@@ -998,32 +1017,20 @@ class Invoice {
     return pw.SvgImage(svg: footerImg);
   }
 
+  pw.Widget _buildAttestionFooter(pw.Context context) {
+    return pw.Container();
+  }
+
   pw.Widget _buildFooter(pw.Context context) {
-    return pw.Row(
-      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: pw.CrossAxisAlignment.end,
-      children: [
-        pw.Container(
-          height: 50,
-          width: 100,
-          child: pw.BarcodeWidget(
-            barcode: pw.Barcode.qrCode(),
-            data: 'Invoice# $invoiceNumber',
-          ),
-        ),
-        pw.Text(
-          'Page ${context.pageNumber}/${context.pagesCount}',
-          style: const pw.TextStyle(
-            fontSize: 12,
-            color: PdfColors.black,
-          ),
-        ),
-      ],
-    );
+    return pw.SvgImage(svg: footerImg);
   }
 
   pw.PageTheme _buildTheme(
-      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
+      PdfPageFormat pageFormat,
+      pw.PageOrientation orientation,
+      pw.Font base,
+      pw.Font bold,
+      pw.Font italic) {
     return pw.PageTheme(
       pageFormat: pageFormat,
       margin: pw.EdgeInsets.only(left: 20, right: 20, bottom: 55),
@@ -1039,102 +1046,28 @@ class Invoice {
     );
   }
 
-  pw.Widget _contentHeader(pw.Context context) {
-    return pw.Stack(
-      children: <pw.Widget>[
-        pw.SvgImage(svg: _chShape),
-        pw.Container(
-          margin: pw.EdgeInsets.only(top: 60, left: 30),
-          width: 500,
-          child: pw.RichText(
-            text: pw.TextSpan(
-              style: pw.TextStyle(
-                fontSize: 12,
-                color: PdfColors.black,
-              ),
-              children: [
-                pw.TextSpan(
-                  text: 'Nom:   ',
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    decoration: pw.TextDecoration.underline,
-                    //font: Gothic,
-                  ),
-                ),
-                pw.TextSpan(
-                  text: _BasicInformations.globalInstance.devoir + '\n',
-                  style: pw.TextStyle(
-                      //fontFamily: 'Century Gothic',
-                      ),
-                ),
-                pw.TextSpan(
-                  text: 'Adresse:   ',
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    decoration: pw.TextDecoration.underline,
-                  ),
-                ),
-                pw.TextSpan(
-                  text: _BasicInformations.globalInstance.ad,
-                  style: pw.TextStyle(
-                      //fontFamily: 'Century Gothic',
-                      ),
-                ),
-              ],
-            ),
-            textAlign: pw.TextAlign.left,
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(top: 145, left: 30),
-          width: 500,
-          child: pw.RichText(
-            text: pw.TextSpan(
-              text: _BasicInformations.globalInstance.ob,
-              style: pw.TextStyle(
-                fontStyle: pw.FontStyle.italic,
-              ),
-            ),
-            textAlign: pw.TextAlign.left,
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(left: 390, right: 20),
-          child: pw.RichText(
-            text: pw.TextSpan(
-              text: _BodyState.jour,
-              style: pw.TextStyle(
-                fontSize: 11,
-                decoration: pw.TextDecoration.underline,
-              ),
-            ),
-            textAlign: pw.TextAlign.left,
-          ),
-        )
-      ],
-    );
-  }
-
-  pw.Widget _contentDevisHeader(pw.Context context) {
+  pw.Widget _contentHeader(pw.Context context, dynamic font,
+      dynamic fontRegular, dynamic fontItalic) {
     return pw.Column(
       children: <pw.Widget>[
         pw.Container(
-          margin: pw.EdgeInsets.only(left: 390, right: 20),
+          margin: pw.EdgeInsets.only(left: 620),
           child: pw.RichText(
             text: pw.TextSpan(
               text: _BodyState.jour,
               style: pw.TextStyle(
+                font: fontItalic,
                 fontSize: 11,
                 decoration: pw.TextDecoration.underline,
                 fontStyle: pw.FontStyle.italic,
               ),
             ),
-            textAlign: pw.TextAlign.left,
+            textAlign: pw.TextAlign.right,
           ),
         ),
         pw.Container(
-          margin: pw.EdgeInsets.only(top: 35),
-          width: 500,
+          margin: pw.EdgeInsets.only(top: 35, left: 10),
+          alignment: pw.Alignment.centerLeft,
           child: pw.RichText(
             text: pw.TextSpan(
               style: pw.TextStyle(
@@ -1145,21 +1078,22 @@ class Invoice {
                 pw.TextSpan(
                   text: 'Doit:   ',
                   style: pw.TextStyle(
+                    font: font,
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
-                    //font: Gothic,
                   ),
                 ),
                 pw.TextSpan(
                   text: _BasicInformations.globalInstance.devoir.toUpperCase() +
                       '\n',
                   style: pw.TextStyle(
-                      //fontFamily: 'Century Gothic',
-                      ),
+                    font: fontRegular,
+                  ),
                 ),
                 pw.TextSpan(
                   text: 'Objet:   ',
                   style: pw.TextStyle(
+                    font: font,
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline,
                   ),
@@ -1167,7 +1101,7 @@ class Invoice {
                 pw.TextSpan(
                   text: _BasicInformations.globalInstance.ob.toUpperCase(),
                   style: pw.TextStyle(
-                    fontStyle: pw.FontStyle.italic,
+                    font: fontRegular,
                   ),
                 ),
               ],
@@ -1177,6 +1111,78 @@ class Invoice {
         ),
       ],
     );
+  }
+
+  pw.Widget _contentDevisHeader(pw.Context context, dynamic font,
+      dynamic fontRegular, dynamic fontItalic) {
+    return pw.Column(
+      children: <pw.Widget>[
+        pw.Container(
+          margin: pw.EdgeInsets.only(left: 390, top: 25),
+          child: pw.RichText(
+            text: pw.TextSpan(
+              text: _BodyState.jour,
+              style: pw.TextStyle(
+                font: fontItalic,
+                fontSize: 11,
+                decoration: pw.TextDecoration.underline,
+                fontStyle: pw.FontStyle.italic,
+              ),
+            ),
+            textAlign: pw.TextAlign.left,
+          ),
+        ),
+        pw.Container(
+          margin: pw.EdgeInsets.only(top: 50, left: 10),
+          alignment: pw.Alignment.centerLeft,
+          child: pw.RichText(
+            text: pw.TextSpan(
+              style: pw.TextStyle(
+                fontSize: 12,
+                color: PdfColors.black,
+              ),
+              children: [
+                pw.TextSpan(
+                  text: 'Doit:   ',
+                  style: pw.TextStyle(
+                    font: font,
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline,
+                    //font: Gothic,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: _BasicInformations.globalInstance.devoir.toUpperCase() +
+                      '\n',
+                  style: pw.TextStyle(
+                    font: fontRegular,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: 'Objet:   ',
+                  style: pw.TextStyle(
+                    font: font,
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline,
+                  ),
+                ),
+                pw.TextSpan(
+                  text: _BasicInformations.globalInstance.ob.toUpperCase(),
+                  style: pw.TextStyle(
+                    font: fontRegular,
+                  ),
+                ),
+              ],
+            ),
+            textAlign: pw.TextAlign.left,
+          ),
+        ),
+      ],
+    );
+  }
+
+  pw.Widget _contentAttestationHeader(pw.Context context) {
+    return pw.Container();
   }
 
   pw.Widget _contentFooter(pw.Context context) {
@@ -1321,7 +1327,8 @@ class Invoice {
     ]);
   }
 
-  pw.Widget _contentDevisFooter(pw.Context context) {
+  pw.Widget _contentDevisFooter(
+      pw.Context context, dynamic font, dynamic font2) {
     if (montant == null) {
       montant = 0;
     }
@@ -1342,7 +1349,9 @@ class Invoice {
                   bottomLeft: pw.Radius.circular(15),
                   bottomRight: pw.Radius.circular(15))),
           child: pw.Text(_grandTotal.toString(),
-              style: pw.TextStyle(color: PdfColor.fromInt(0xFFFFFFFF)))),
+              style: pw.TextStyle(
+                  color: PdfColor.fromInt(0xFFFFFFFF),
+                  fontWeight: pw.FontWeight.bold))),
       pw.SizedBox(height: 30),
       pw.Container(
           alignment: pw.Alignment.centerLeft,
@@ -1355,13 +1364,17 @@ class Invoice {
               children: [
                 pw.TextSpan(
                   text: 'Soit la somme de : ',
-                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic
-                      //font: Gothic,
-                      ),
+                  style: pw.TextStyle(
+                    fontStyle: pw.FontStyle.italic,
+                    font: font,
+                  ),
                 ),
                 pw.TextSpan(
-                  text: fnumberToLetter(_grandTotal.round()) + '\n',
-                  style: pw.TextStyle(fontStyle: pw.FontStyle.italic),
+                  text: fnumberToLetter(_grandTotal.round()) + ' XFA' + '\n',
+                  style: pw.TextStyle(
+                    font: font2,
+                    fontStyle: pw.FontStyle.italic,
+                  ),
                 ),
               ],
             ),
@@ -1370,65 +1383,155 @@ class Invoice {
     ]);
   }
 
-  pw.Widget _contentTable(pw.Context context) {
-    const tableHeaders = [
-      'N°',
-      'Désignation',
-      'Réduction',
-      'Qté',
-      'Prix U.',
-      'Prix T.'
-    ];
-
-    return pw.Table.fromTextArray(
-      border: null,
-      cellAlignment: pw.Alignment.centerLeft,
-      headerDecoration: pw.BoxDecoration(
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
-        color: PdfColor.fromInt(0xFF00A6F0),
-      ),
-      headerHeight: 25,
-      cellHeight: 40,
-      cellAlignments: {
-        0: pw.Alignment.center,
-        1: pw.Alignment.centerLeft,
-        2: pw.Alignment.center,
-        3: pw.Alignment.center,
-        4: pw.Alignment.centerRight,
-        5: pw.Alignment.centerRight,
-      },
-      headerStyle: pw.TextStyle(
-        color: _baseTextColor,
-        fontSize: 10,
-        fontWeight: pw.FontWeight.bold,
-      ),
-      cellStyle: const pw.TextStyle(
-        color: _darkColor,
-        fontSize: 10,
-      ),
-      rowDecoration: pw.BoxDecoration(
-        border: pw.Border(
-          bottom: pw.BorderSide(
-            color: accentColor,
-            width: .5,
-          ),
-        ),
-      ),
-      headers: List<String>.generate(
-        tableHeaders.length,
-        (col) => tableHeaders[col],
-      ),
-      data: List<List<String>>.generate(
-        products.length,
-        (row) => List<String>.generate(
-          tableHeaders.length,
-          (col) => products[row].getIndex(col),
-        ),
-      ),
-    );
+  pw.Widget _contentAttestationFooter(
+      pw.Context context, dynamic font, dynamic font2) {
+    return pw.Container(
+        alignment: pw.Alignment.center,
+        margin: pw.EdgeInsets.only(top: 200),
+        child: pw.Column(children: <pw.Widget>[
+          pw.Container(
+              alignment: pw.Alignment.center,
+              child: pw.RichText(
+                text: pw.TextSpan(
+                  style: pw.TextStyle(
+                    fontSize: 12,
+                    color: PdfColors.black,
+                  ),
+                  children: [
+                    pw.TextSpan(
+                      text:
+                          'Je sousigné Jordan Felex NGUE en qualité de formateur en xxxxxxxxxxxxxxxxxxx\n',
+                      style: pw.TextStyle(
+                        font: font,
+                        fontStyle: pw.FontStyle.italic,
+                        color: PdfColor.fromInt(0xFF2E3191),
+                        fontWeight: pw.FontWeight.bold,
+                      ),
+                    ),
+                    pw.TextSpan(
+                      text: 'Atteste que, M.Mlle/Mme' + '\n',
+                      style: pw.TextStyle(
+                          font: font,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF2E3191),
+                          fontWeight: pw.FontWeight.bold),
+                    ),
+                  ],
+                ),
+                textAlign: pw.TextAlign.center,
+              )),
+          pw.Container(
+              margin: pw.EdgeInsets.only(top: 5),
+              child: pw.Text("Nom & Prénom",
+                  style: pw.TextStyle(
+                    font: font,
+                    fontStyle: pw.FontStyle.italic,
+                    color: PdfColor.fromInt(0xFF3C3C3B),
+                    fontSize: 43,
+                    fontWeight: pw.FontWeight.bold,
+                  ))),
+          pw.Container(
+              margin: pw.EdgeInsets.only(top: 40),
+              child: pw.Column(children: <pw.Widget>[
+                pw.RichText(
+                  text: pw.TextSpan(
+                    style: pw.TextStyle(
+                      fontSize: 12,
+                      color: PdfColors.black,
+                    ),
+                    children: [
+                      pw.TextSpan(
+                        text: 'a suivi avec succès une formation au sein du ',
+                        style: pw.TextStyle(
+                          font: font2,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF000000),
+                        ),
+                      ),
+                      pw.TextSpan(
+                        text: 'GEG (Global Engineering Group)',
+                        style: pw.TextStyle(
+                          font: font2,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF2E3191),
+                        ),
+                      ),
+                      pw.TextSpan(
+                        text: ' à ',
+                        style: pw.TextStyle(
+                          font: font2,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF000000),
+                        ),
+                      ),
+                      pw.TextSpan(
+                        text: ' xxxxxxxxxxxx \n',
+                        style: pw.TextStyle(
+                            font: font,
+                            fontStyle: pw.FontStyle.italic,
+                            color: PdfColor.fromInt(0xFF000000),
+                            fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.TextSpan(
+                        text: ' du',
+                        style: pw.TextStyle(
+                          font: font2,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF000000),
+                        ),
+                      ),
+                      pw.TextSpan(
+                        text: ' jj/mm/yy',
+                        style: pw.TextStyle(
+                            font: font,
+                            fontStyle: pw.FontStyle.italic,
+                            color: PdfColor.fromInt(0xFF000000),
+                            fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.TextSpan(
+                        text: ' au',
+                        style: pw.TextStyle(
+                          font: font2,
+                          fontStyle: pw.FontStyle.italic,
+                          color: PdfColor.fromInt(0xFF000000),
+                        ),
+                      ),
+                      pw.TextSpan(
+                        text: ' jj/mm/yy \n',
+                        style: pw.TextStyle(
+                            font: font,
+                            fontStyle: pw.FontStyle.italic,
+                            color: PdfColor.fromInt(0xFF000000),
+                            fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.TextSpan(
+                        text:
+                            'Sous partenariat avec Visibility Online Business \n',
+                        style: pw.TextStyle(
+                            font: font2,
+                            fontStyle: pw.FontStyle.italic,
+                            color: PdfColor.fromInt(0xFF000000),
+                            fontWeight: pw.FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  '\n Cette Attestation est délivrée pour faire valoir ce que de droit',
+                  style: pw.TextStyle(
+                      font: font,
+                      fontStyle: pw.FontStyle.italic,
+                      color: PdfColor.fromInt(0xFF2E3191),
+                      fontWeight: pw.FontWeight.bold),
+                ),
+              ]))
+        ]));
   }
 
-  pw.Widget _contentDevisTable(pw.Context context) {
+  pw.Widget _contentTable(
+      pw.Context context, dynamic font, dynamic fontRegular) {
     const tableHeaders = [
       'N°',
       'Désignation',
@@ -1460,11 +1563,13 @@ class Invoice {
             5: pw.Alignment.centerRight,
           },
           headerStyle: pw.TextStyle(
+            font: font,
             color: _baseTextColor,
             fontSize: 10,
             fontWeight: pw.FontWeight.bold,
           ),
-          cellStyle: const pw.TextStyle(
+          cellStyle: pw.TextStyle(
+            font: fontRegular,
             color: _darkColor,
             fontSize: 10,
           ),
@@ -1488,6 +1593,75 @@ class Invoice {
             ),
           ),
         ));
+  }
+
+  pw.Widget _contentDevisTable(
+      pw.Context context, dynamic font, dynamic fontRegular) {
+    const tableHeaders = [
+      'N°',
+      'Désignation',
+      'Réduction',
+      'Qté',
+      'Prix U.',
+      'Prix T.'
+    ];
+
+    return pw.Padding(
+        padding: pw.EdgeInsets.only(top: 20),
+        child: pw.Table.fromTextArray(
+          border: null,
+          cellAlignment: pw.Alignment.centerLeft,
+          headerDecoration: pw.BoxDecoration(
+            borderRadius: const pw.BorderRadius.only(
+                topLeft: pw.Radius.circular(15),
+                topRight: pw.Radius.circular(15)),
+            color: PdfColor.fromInt(0xFF00A6F0),
+          ),
+          headerHeight: 25,
+          cellHeight: 40,
+          cellAlignments: {
+            0: pw.Alignment.center,
+            1: pw.Alignment.centerLeft,
+            2: pw.Alignment.center,
+            3: pw.Alignment.center,
+            4: pw.Alignment.centerRight,
+            5: pw.Alignment.centerRight,
+          },
+          headerStyle: pw.TextStyle(
+            font: font,
+            color: _baseTextColor,
+            fontSize: 10,
+            fontWeight: pw.FontWeight.bold,
+          ),
+          cellStyle: pw.TextStyle(
+            font: fontRegular,
+            color: _darkColor,
+            fontSize: 10,
+          ),
+          rowDecoration: pw.BoxDecoration(
+            border: pw.Border(
+              bottom: pw.BorderSide(
+                color: accentColor,
+                width: .5,
+              ),
+            ),
+          ),
+          headers: List<String>.generate(
+            tableHeaders.length,
+            (col) => tableHeaders[col],
+          ),
+          data: List<List<String>>.generate(
+            products.length,
+            (row) => List<String>.generate(
+              tableHeaders.length,
+              (col) => products[row].getIndex(col),
+            ),
+          ),
+        ));
+  }
+
+  pw.Widget _contentAttestationTable(pw.Context context) {
+    return pw.Container();
   }
 }
 

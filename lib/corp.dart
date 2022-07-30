@@ -13,7 +13,7 @@ class Corp extends StatelessWidget {
         Text('Facturation Automatique',
               style: TextStyle(fontFamily: 'Century Gothic',fontWeight: FontWeight.w400,)
         ),
-        backgroundColor: Color(0xFF7451eb),
+        backgroundColor: Color(0xFF2E3191),
         elevation: 0.0,
       ),
 
