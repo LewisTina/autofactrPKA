@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="refactor some code">
+      <change beforePath="$PROJECT_DIR$/lib/body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/invoice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/invoice.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2CaSHp4K9unVJSzrIW1tkhvhZJB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="72cb73cb-dfbf-4675-888d-e867a027246f" name="Default Changelist" comment="" />
+      <created>1659039117359</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659039117359</updated>
+    </task>
+    <task id="LOCAL-00001" summary="fix build issues">
+      <created>1659066369485</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1659066369487</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add the estimate pdf model">
+      <created>1659131844683</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659131844685</updated>
+    </task>
+    <task id="LOCAL-00003" summary="refactor some code">
+      <created>1659170716364</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1659170716364</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix build issues" />
+    <MESSAGE value="add the estimate pdf model" />
+    <MESSAGE value="refactor some code" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor some code" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="93" y="93" width="1095" height="535" key="DiffContextDialog" timestamp="1659166964102">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="93" y="93" width="1095" height="535" key="DiffContextDialog/0.0.1280.720@0.0.1280.720" timestamp="1659166964102" />
+    <state x="421" y="102" key="FileChooserDialogImpl" timestamp="1659061966431">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="421" y="102" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1659061966431" />
+    <state width="1236" height="264" key="GridCell.Tab.0.bottom" timestamp="1659165492038">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1236" height="264" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
+    <state width="1236" height="264" key="GridCell.Tab.0.center" timestamp="1659165492038">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1236" height="264" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
+    <state width="1236" height="264" key="GridCell.Tab.0.left" timestamp="1659165492036">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1236" height="264" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1659165492036" />
+    <state width="1236" height="264" key="GridCell.Tab.0.right" timestamp="1659165492038">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1236" height="264" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1659165492038" />
+    <state x="142" y="6" key="SettingsEditor" timestamp="1659064075473">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="142" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1659064075473" />
+    <state x="233" y="90" key="Vcs.Push.Dialog.v2" timestamp="1659170722400">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="233" y="90" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1659170722400" />
+    <state x="304" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1659067236135">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="304" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720@0.0.1280.720" timestamp="1659067236135" />
+    <state x="348" y="77" width="585" height="624" key="find.popup" timestamp="1659171022014">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="348" y="77" width="585" height="624" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1659171022014" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659158626291">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1659158626291" />
+  </component>
+</project>

@@ -345,7 +345,7 @@ class Invoice {
 }
 
 String _formatCurrency(double amount) {
-  return '\€${amount.toStringAsFixed(2)}';
+  return '\XFA${amount.toStringAsFixed(2)}';
 }
 
 class Product {
